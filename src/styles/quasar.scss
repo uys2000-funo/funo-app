@@ -1,3 +1,8 @@
-@import './quasar.variables.scss';
-@import '~quasar-styl';
+@import "./quasar.variables.scss";
+@import "./typography.scss";
+@import "~quasar-styl";
 // @import '~quasar-addon-styl';
+
+.column * {
+  flex-shrink: 0;
+}

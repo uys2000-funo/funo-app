@@ -1,0 +1,69 @@
+/* Fonts */
+@font-face {
+  font-family: SourceSans;
+  src: url("@/assets/fonts/SourceSans3.ttf");
+}
+
+.SourceSans {
+  font-family: SourceSans;
+}
+
+/* Text Colors */
+.ct {
+  color: $text;
+}
+.cs {
+  color: #8a8a8a;
+}
+.cb {
+  color: $brand;
+}
+/* Font Sizes */
+.fs12 {
+  font-size: 12px;
+}
+.fs16 {
+  font-size: 16px;
+}
+.fs18 {
+  font-size: 18px;
+}
+.fs20 {
+  font-size: 20px;
+}
+.fs28 {
+  font-size: 28px;
+}
+
+/* Line Heights */
+.lh15 {
+  line-height: 15px;
+}
+.lh20 {
+  line-height: 20px;
+}
+.lh24 {
+  line-height: 24px;
+}
+.lh27 {
+  line-height: 27px;
+}
+.lh35 {
+  line-height: 35px;
+}
+
+/* Font Weights */
+.fw400 {
+  font-weight: 400;
+}
+.fw600 {
+  font-weight: 600;
+}
+.fw700 {
+  font-weight: 700;
+}
+
+/* Svg Fill */
+.fp {
+  fill: $primary;
+}
