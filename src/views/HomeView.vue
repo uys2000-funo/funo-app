@@ -1,5 +1,6 @@
 <template>
   <q-page style="padding-top: 50px;">
+    <!-- #region Home View Sticky Header-->
     <q-page-sticky expand position="top" class="bg-white" style="z-index:50">
       <q-toolbar class="text-center ct fw600 fs16 lh20 row justify-between" style="padding: 0 16px;">
         <div class="row no-wrap items-end" style="gap:4px">
@@ -30,15 +31,66 @@
         </div>
       </q-toolbar>
     </q-page-sticky>
+    <!-- #rendregion -->
 
-    <side-scroll style="height: 235px; width: 100%;">
+    <!-- #region Popular Events -->
+    <!-- #region Popular Events Header -->
+    <div class="row justify-between" style="margin: 0 16px; margin-top: 24px; margin-bottom: 16px;">
+      <span class="text-black sw600 fs14 lh17">
+        POPULAR ETKİNLİKLER
+      </span>
+
+      <router-link class="cb sw600 fs14 lh17" :to="{ name: 'DiscoverView' }" style="text-decoration: none;">
+        Tümünü Gsöter
+      </router-link>
+    </div>
+    <!-- #rendregion -->
+    <side-scroll style="height: 245px; width: 100%; overflow-y: visible;">
       <event-mini :event-data="exampleEvent" />
+      <event-mini :event-data="exampleEvent2" />
+      <event-mini :event-data="exampleEvent" />
+      <event-mini :event-data="exampleEvent2" />
     </side-scroll>
-    <p v-for="n in 15" :key="n">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nihil praesentium molestias a adipisci, dolore vitae
-      odit, quidem consequatur optio voluptates asperiores pariatur eos numquam rerum delectus commodi perferendis
-      voluptate?
-    </p>
+    <!-- #rendregion -->
+    <!-- #region Popular Events -->
+    <!-- #region Popular Events Header -->
+    <div class="row justify-between" style="margin: 0 16px; margin-top: 24px; margin-bottom: 16px;">
+      <span class="text-black sw600 fs14 lh17">
+        ÇEVRENDEKİLER
+      </span>
+
+      <router-link class="cb sw600 fs14 lh17" :to="{ name: 'DiscoverView' }" style="text-decoration: none;">
+        Tümünü Gsöter
+      </router-link>
+    </div>
+    <!-- #rendregion -->
+    <side-scroll style="height: 245px; width: 100%;">
+      <event-mini :event-data="exampleEvent" />
+      <event-mini :event-data="exampleEvent2" />
+      <event-mini :event-data="exampleEvent" />
+      <event-mini :event-data="exampleEvent2" />
+    </side-scroll>
+    <!-- #rendregion -->
+    <!-- #region Popular Events -->
+    <!-- #region Popular Events Header -->
+    <div class="row justify-between" style="margin: 0 16px; margin-top: 24px; margin-bottom: 16px;">
+      <span class="text-black sw600 fs14 lh17">
+        SANa ÖZEL
+      </span>
+
+      <router-link class="cb sw600 fs14 lh17" :to="{ name: 'DiscoverView' }" style="text-decoration: none;">
+        Tümünü Gsöter
+      </router-link>
+    </div>
+    <!-- #rendregion -->
+    <side-scroll style="height: 245px; width: 100%;">
+      <event-mini :event-data="exampleEvent" />
+      <event-mini :event-data="exampleEvent2" />
+      <event-mini :event-data="exampleEvent" />
+      <event-mini :event-data="exampleEvent2" />
+    </side-scroll>
+    <!-- #rendregion -->
+
   </q-page>
 </template>
 
@@ -56,7 +108,8 @@ export default defineComponent({
   components: { LocationIcon, ArrowIcon, SideScroll, EventMini },
   data() {
     return {
-      exampleEvent: new EventData()
+      exampleEvent: new EventData(true),
+      exampleEvent2: new EventData()
     }
   }
 })

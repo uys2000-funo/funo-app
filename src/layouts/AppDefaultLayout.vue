@@ -8,11 +8,11 @@
   </q-layout>
 </template>
 <script lang="ts">
-import theHeader from "@/components/app/theHeader.vue"
-import theFooter from "@/components/app/theFooter.vue"
+import theHeader from "@/components/app/HeaderDefault.vue"
+import theFooter from "@/components/app/FooterDefault.vue"
 import { defineComponent } from "vue";
-
 export default defineComponent({
+  name: "AppDefaultLayout",
   components: { theHeader, theFooter }
 })
 </script>

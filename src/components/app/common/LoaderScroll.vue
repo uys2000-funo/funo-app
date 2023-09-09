@@ -14,6 +14,7 @@ import { PropType, defineComponent } from 'vue';
 
 type OnLoad = (index: number, done: (stop?: boolean | undefined) => void) => void
 export default defineComponent({
+  name: "LoaderScroll",
   props: {
     onLoad: {
       type: Function as PropType<OnLoad>,

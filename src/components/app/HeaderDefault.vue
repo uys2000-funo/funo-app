@@ -35,6 +35,7 @@ import { UserData } from '@/types/user'
 import { getLocalUserData } from '@/services/app/user'
 
 export default defineComponent({
+  name: "HeaderDefault",
   components: { FunoTextIcon, MessageIcon, AlertIcon, UserAvatar },
   data() {
     return {

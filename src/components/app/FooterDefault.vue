@@ -71,6 +71,7 @@ import FunoIcon from "@/icons/logo/FunoIcon.vue";
 
 import { defineComponent } from "vue";
 export default defineComponent({
+  name: "FooterDefault",
   components: { HomeIcon, CalendarIcon, AccountIcon, WorldIcon, FunoIcon },
   computed: {
     isHomeActive(): boolean {

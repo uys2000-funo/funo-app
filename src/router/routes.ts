@@ -28,8 +28,8 @@ const routes: Array<RouteRecordRaw> = [
   // #region Logged User
   {
     path: "/app",
-    name: "AppLayout",
-    component: () => import("@/layouts/AppLayout.vue"),
+    name: "AppDefaultLayout",
+    component: () => import("@/layouts/AppDefaultLayout.vue"),
     children: [
       {
         path: "home",
@@ -55,6 +55,25 @@ const routes: Array<RouteRecordRaw> = [
         path: "user",
         name: "UserView",
         component: () => import("@/views/UserView.vue"),
+      },
+    ],
+  },
+  // #endregion
+  // #region Logged User Comes from out
+  {
+    path: "/app",
+    name: "AppDirectLayout",
+    component: () => import("@/layouts/AppDirectLayout.vue"),
+    children: [
+      {
+        path: "event-create",
+        name: "EventCreateView",
+        props: {
+          directAccess: {
+            headerText: "Etkinlik Oluştur",
+          },
+        },
+        component: () => import("@/views/EventCreateView.vue"),
       },
     ],
   },

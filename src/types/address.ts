@@ -2,6 +2,7 @@ export type PhysicalAddress = {
   text: string;
   description: string;
 
+  place: string;
   city: string;
   district: string;
   country: string;
