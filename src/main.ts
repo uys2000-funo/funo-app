@@ -5,11 +5,18 @@ import { createPinia } from "pinia";
 
 import router from "./router";
 
-import { Quasar } from "quasar";
-import quasarConfig from "./configs/quasar";
+import { Quasar, Notify } from "quasar";
+import "@/styles/quasar.scss";
+import "@quasar/extras/material-icons/material-icons.css";
+
+import "@/services/debugLogger";
 
 const app = createApp(App);
 app.use(createPinia());
-app.use(Quasar, quasarConfig);
+
+app.use(Quasar, {
+  plugins: { Notify },
+});
+
 app.use(router);
-app.mount("#app");
+app.mount("body");

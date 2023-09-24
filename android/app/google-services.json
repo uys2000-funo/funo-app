@@ -1,0 +1,43 @@
+{
+  "project_info": {
+    "project_number": "375741112301",
+    "project_id": "funo-66c58",
+    "storage_bucket": "funo-66c58.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:375741112301:android:cd18a537c3ad69ac9b11e4",
+        "android_client_info": {
+          "package_name": "com.funo.funo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "375741112301-cfscpcarb5p4fmn4vehgu9vpa0unfj1p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.funo.funo",
+            "certificate_hash": "fd5849ac02246a6133b09b716caf49b47f7e4e9b"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFIazL-O9uSo9hC9ZXkAdX5cnHeAYxEZk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "375741112301-l4dsovo92n50ui2b6h1ccq3c0ug6fk9r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,15 +1,55 @@
 // It's highly recommended to change the default colors
 // to match your app's branding.
 
-$primary   : #027BE3;
-$secondary : #26A69A;
-$accent    : #9C27B0;
+$primary: #ff7f00;
+$secondary: #f5f7fb;
+$accent: #16191c;
 
-$dark      : #1D1D1D;
+$dark: #1d1d1d;
 
-$positive  : #21BA45;
-$negative  : #C10015;
-$info      : #31CCEC;
-$warning   : #F2C037;
+$positive: #21ba45;
+$negative: #ff0000;
+$info: #31ccec;
+$warning: #f2c037;
 
-@import '~quasar-variables-styl'
+$color-title: #000000;
+$color-sub-title: #7b7b7b;
+
+$color-text: #5a5a5a;
+$color-button-text: #ffffff;
+
+$color-primary: #ff7f00;
+$color-alert: #af0909;
+$color-negative: #d10f0f;
+$color-positive: #32cd32;
+$color-info: #31ccec;
+
+// Category Colors
+$color-category-art: #c81800;
+$color-category-tech: #02577a;
+$color-category-music: #30b254;
+$color-category-education: #02577a;
+$color-category-sport: #30b254;
+
+:root {
+  --color-title: #{$color-title};
+  --color-sub-title: #{$color-sub-title};
+
+  --color-text: #{$color-text};
+  --color-button-text: #{$color-button-text};
+
+  --color-primary: #{$color-primary};
+  --color-alert: #{$color-alert};
+  --color-negative: #{$color-negative};
+  --color-positive: #{$color-positive};
+  --color-info: #{$color-info};
+
+  // Category#{}s
+  --color-category-art: #{$color-category-art};
+  --color-category-tech: #{$color-category-tech};
+  --color-category-music: #{$color-category-music};
+  --color-category-education: #{$color-category-education};
+  --color-category-sport: #{$color-category-sport};
+}
+
+@import "~quasar-variables-styl";
