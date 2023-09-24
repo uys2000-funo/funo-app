@@ -1,9 +1,15 @@
 <template>
-  <div id="app" class="SourceSans ct">
+  <div id="app" class="SourceSans ctitle">
     <router-view />
   </div>
 </template>
 
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+})
+</script>
 
 <style scoped>
 #app {

@@ -52,9 +52,9 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/MapView.vue"),
       },
       {
-        path: "user",
-        name: "UserView",
-        component: () => import("@/views/UserView.vue"),
+        path: "user-profile",
+        name: "UserProfileView",
+        component: () => import("@/views/UserProfileView.vue"),
       },
     ],
   },
@@ -64,13 +64,26 @@ const routes: Array<RouteRecordRaw> = [
     path: "/app",
     name: "AppDirectLayout",
     component: () => import("@/layouts/AppDirectLayout.vue"),
+    // To use direcet Acces props in pages, there should be props: ["directAccess"] in the pages
     children: [
+      {
+        path: "event-detail",
+        name: "EventDetailView",
+        props: {
+          directAccess: {
+            headerText: "Etkinlik Detay",
+            buttonText: "Etkinliğe Katıl",
+          },
+        },
+        component: () => import("@/views/EventDetailView.vue"),
+      },
       {
         path: "event-create",
         name: "EventCreateView",
         props: {
           directAccess: {
             headerText: "Etkinlik Oluştur",
+            buttonText: "Oluştur",
           },
         },
         component: () => import("@/views/EventCreateView.vue"),
@@ -78,6 +91,11 @@ const routes: Array<RouteRecordRaw> = [
     ],
   },
   // #endregion
+  {
+    name: "test",
+    path: "/test",
+    component: () => import("@/views/TestView.vue"),
+  },
 ];
 
 export { routes };

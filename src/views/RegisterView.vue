@@ -49,7 +49,7 @@
                 </q-item-section>
                 <q-item-section>
                   <q-item-label>
-                    <a href="javascript;;" @click.prevent="openLicenseAgreement" class="ct">
+                    <a href="javascript;;" @click.prevent="openLicenseAgreement" class="ctitle">
                       Kullanıcı sözleşmesi</a>'ni okudum ve onaylıyorum.</q-item-label>
                 </q-item-section>
               </q-item>
@@ -143,7 +143,7 @@
                 </q-item-section>
                 <q-item-section>
                   <q-item-label>
-                    <a href="javascript;;" @click.prevent="openLicenseAgreement" class="ct">
+                    <a href="javascript;;" @click.prevent="openLicenseAgreement" class="ctitle">
                       Kullanıcı sözleşmesi</a>'ni okudum ve onaylıyorum.</q-item-label>
                 </q-item-section>
               </q-item>

@@ -1,10 +1,10 @@
 <template>
-  <q-header reveal height-hint="107" class="bg-white ct">
+  <q-header reveal height-hint="107" class="bg-white ctitle">
     <q-toolbar class="text-center">
       <q-icon size="24px" class="absolute">
         <arrow-left-icon />
       </q-icon>
-      <q-toolbar-title class="ct fw600 fs15 lh18" style="letter-spacing: -2%; padding: 0;">
+      <q-toolbar-title class="ctitle fw600 fs15 lh18" style="letter-spacing: -2%; padding: 0;">
         {{ headerText }}
       </q-toolbar-title>
     </q-toolbar>

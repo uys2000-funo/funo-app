@@ -1,6 +1,37 @@
 import { FirebaseDocument } from "./firebase";
 
-export class IndividualUser {
+export class User {
+  general!: {
+    name: string;
+    phone: string;
+    photoUrl: string;
+  };
+  account!: {
+    name: string;
+    mail: string;
+  };
+  counts?: {
+    followers?: number;
+    following?: number;
+    posints?: number;
+    posts?: number;
+    comments?: number;
+    likes?: number;
+    events?: number;
+    participating?: number;
+  };
+  settings?: {
+    privacy?: {
+      showMail?: boolean;
+    };
+  };
+  interests?: {
+    main?: string[];
+    side?: string[];
+  };
+  firebase?: FirebaseDocument;
+}
+export class IndividualUser extends User {
   general: {
     name: string;
     surname: string;
@@ -9,17 +40,8 @@ export class IndividualUser {
     gender: boolean;
     photoUrl: string;
   };
-  account: {
-    name: string;
-    mail: string;
-  };
-  interests: {
-    main: string[];
-    side: string[];
-  };
-  firebase: FirebaseDocument;
-
   constructor() {
+    super();
     this.general = {
       name: "",
       surname: "",
@@ -36,6 +58,7 @@ export class IndividualUser {
       main: [""],
       side: [""],
     };
+    this.counts = {};
     this.firebase = {
       ctimestamp: 0,
       utimestamp: 0,
@@ -49,7 +72,7 @@ export class IndividualUser {
     };
   }
 }
-export class EnterpriseUser {
+export class EnterpriseUser extends User {
   general: {
     name: string;
     taxNumber: string;
@@ -58,17 +81,8 @@ export class EnterpriseUser {
     photoUrl: string;
     isVerified: boolean;
   };
-  account: {
-    name: string;
-    mail: string;
-  };
-  interests: {
-    main: string[];
-    side: string[];
-  };
-  firebase: FirebaseDocument;
-
   constructor() {
+    super();
     this.general = {
       name: "",
       taxNumber: "",

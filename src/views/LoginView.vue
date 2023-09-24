@@ -21,7 +21,7 @@
           </q-btn>
         </div>
         <div class="text-right">
-          <router-link class="ct fs16 lh20 fw600" to="/login#forgot">
+          <router-link class="ctitle fs16 lh20 fw600" to="/login#forgot">
             Şifreni mi unuttun?
           </router-link>
         </div>
@@ -33,7 +33,7 @@
           <q-btn no-caps square flat class="fit" @click="signInWithGoogle">
             <div class="row flex-center" style="gap:6px">
               <icon-google />
-              <span class="ct fs18 fw700">
+              <span class="ctitle fs18 fw700">
                 Google ile devam et
               </span>
             </div>
@@ -43,7 +43,7 @@
           <q-btn no-caps square flat class="fit" @click="signInWithApple">
             <div class="row flex-center" style="gap:6px">
               <icon-apple />
-              <span class="ct fs18 fw700">
+              <span class="ctitle fs18 fw700">
                 Apple ile devam et
               </span>
             </div>
@@ -64,7 +64,7 @@
     <q-carousel-slide name="forgot" class="column align-center no-wrap" style="gap:16px">
       <forgot-icon style="margin: 16px auto;" />
       <div class="text-center">
-        <span class="ct fs20 lh30 fw600">
+        <span class="ctitle fs20 lh30 fw600">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         </span>
       </div>
@@ -78,7 +78,7 @@
           </q-btn>
         </div>
         <div class="text-right">
-          <router-link class="ct fs16 lh20 fw600" to="/login#forgot">
+          <router-link class="ctitle fs16 lh20 fw600" to="/login#forgot">
             Şifreni mi unuttun?
           </router-link>
         </div>

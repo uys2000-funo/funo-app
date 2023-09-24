@@ -6,4 +6,5 @@ export default {
   plugins: {
     Notify,
   },
+  animations: "all",
 };

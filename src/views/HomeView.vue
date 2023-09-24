@@ -2,10 +2,10 @@
   <q-page style="padding-top: 50px;">
     <!-- #region Home View Sticky Header-->
     <q-page-sticky expand position="top" class="bg-white" style="z-index:50">
-      <q-toolbar class="text-center ct fw600 fs16 lh20 row justify-between" style="padding: 0 16px;">
+      <q-toolbar class="text-center ctitle fw600 fs16 lh20 row justify-between" style="padding: 0 16px;">
         <div class="row no-wrap items-end" style="gap:4px">
           <q-icon size="24px">
-            <location-icon class="fp" />
+            <location-icon style="fill: var(--color-primary);" />
           </q-icon>
           <div>
             <div class="text-left"
@@ -21,7 +21,7 @@
           </div>
         </div>
         <div class="bg-primary text-white" style="border-radius:100px; overflow: hidden; height: 35px; width: 113px;">
-          <q-btn no-caps square flat class="fit" dense>
+          <q-btn no-caps square flat class="fit" dense to="#event-create">
             <div class="row flex-center" style="gap:6px">
               <span class="fs12 fw600 lh15">
                 Etkinlik Oluştur
@@ -45,11 +45,11 @@
       </router-link>
     </div>
     <!-- #rendregion -->
-    <side-scroll style="height: 245px; width: 100%; overflow-y: visible;">
-      <event-mini :event-data="exampleEvent" />
-      <event-mini :event-data="exampleEvent2" />
-      <event-mini :event-data="exampleEvent" />
-      <event-mini :event-data="exampleEvent2" />
+    <side-scroll style="height: 279px; width: 100%; overflow-y: visible;">
+      <event-summary small :event-data="exampleEvent" />
+      <event-summary small :event-data="exampleEvent2" />
+      <event-summary small :event-data="exampleEvent" />
+      <event-summary small :event-data="exampleEvent2" />
     </side-scroll>
     <!-- #rendregion -->
     <!-- #region Popular Events -->
@@ -64,11 +64,11 @@
       </router-link>
     </div>
     <!-- #rendregion -->
-    <side-scroll style="height: 245px; width: 100%;">
-      <event-mini :event-data="exampleEvent" />
-      <event-mini :event-data="exampleEvent2" />
-      <event-mini :event-data="exampleEvent" />
-      <event-mini :event-data="exampleEvent2" />
+    <side-scroll style="height: 279px; width: 100%;">
+      <event-summary small :event-data="exampleEvent" />
+      <event-summary small :event-data="exampleEvent2" />
+      <event-summary small :event-data="exampleEvent" />
+      <event-summary small :event-data="exampleEvent2" />
     </side-scroll>
     <!-- #rendregion -->
     <!-- #region Popular Events -->
@@ -83,11 +83,11 @@
       </router-link>
     </div>
     <!-- #rendregion -->
-    <side-scroll style="height: 245px; width: 100%;">
-      <event-mini :event-data="exampleEvent" />
-      <event-mini :event-data="exampleEvent2" />
-      <event-mini :event-data="exampleEvent" />
-      <event-mini :event-data="exampleEvent2" />
+    <side-scroll style="height: 279px; width: 100%;">
+      <event-summary small :event-data="exampleEvent" />
+      <event-summary small :event-data="exampleEvent2" />
+      <event-summary small :event-data="exampleEvent" />
+      <event-summary small :event-data="exampleEvent2" />
     </side-scroll>
     <!-- #rendregion -->
 
@@ -102,15 +102,18 @@ import ArrowIcon from "@/icons/common/ArrowIcon.vue"
 
 
 import SideScroll from "@/components/app/common/SideScroll.vue"
-import EventMini from '@/components/app/common/EventMini.vue';
+import EventSummary from '@/components/app/common/EventSummary.vue';
+
 import { EventData } from '@/types/event';
 export default defineComponent({
-  components: { LocationIcon, ArrowIcon, SideScroll, EventMini },
+  components: { LocationIcon, ArrowIcon, SideScroll, EventSummary, },
   data() {
     return {
-      exampleEvent: new EventData(true),
-      exampleEvent2: new EventData()
+      exampleEvent: new EventData(true, true),
+      exampleEvent2: new EventData(false, true),
     }
+  },
+  computed: {
   }
 })
 </script>

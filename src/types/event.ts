@@ -1,8 +1,19 @@
 import { OnlineAddress, PhysicalAddress } from "./address";
 import { FirebaseDocument } from "./firebase";
 
-export type EventMainTag = "Sport" | "Education" | "Art" | "Meet" | "Music";
+export type EventMainTag =
+  | "sport"
+  | "education"
+  | "art"
+  | "meet"
+  | "music"
+  | "tech";
 
+export class EventUsers {
+  //Last Joined Users Photos (10 Photos)
+  userPhotoUrls!: string[] | null;
+  userCount!: number | null;
+}
 export class EventOwner {
   uID!: string;
   name!: string;
@@ -14,13 +25,14 @@ export class EventOwner {
   constructor() {
     this.uID = "000";
     this.name = "Mehmet";
-    this.photoUrl = "";
+    this.photoUrl = "https://avatars.githubusercontent.com/u/55789855?s=40&v=4";
     this.email = "mehmetuysal2000@gm.com";
     this.phone = "+9055163983619";
     this.isApproved = false;
   }
 }
 export class EventData {
+  eID?: string;
   general!: {
     name: string;
     description: string | null;
@@ -39,16 +51,13 @@ export class EventData {
     price: number | null;
   };
 
-  users!: {
-    //Last Joined Users Photos (10 Photos)
-    userPhotoUrls: string[] | null;
-    userCount: number | null;
-  };
+  users!: EventUsers;
 
   owners!: EventOwner[];
   firebase!: FirebaseDocument;
 
   constructor(isOnline = false, isExample = false) {
+    this.eID = "testEventID";
     this.general = {
       name: "",
       description: "",
@@ -69,10 +78,7 @@ export class EventData {
         main: null,
         side: [],
       },
-      photoUrls: [
-        "https://i.dugun.com/gallery/87269/preview_first-step-wedding-event_w5T7vfjQ.jpeg",
-        "https://i.dugun.com/gallery/65413/preview_swiss-event_Y67eZCCS.jpg",
-      ],
+      photoUrls: [],
     };
     this.conditions = {
       needsApproval: false,
@@ -95,22 +101,23 @@ export class EventData {
     if (isExample) {
       this.general = {
         name: "Etkinlik İsmir",
-        description: "Etkinlik Açıklaması",
+        description:
+          "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorem aliquid veniam, esse consequuntur laborum saepe. Cum voluptatem maiores est sunt incidunt laudantium, cumque mollitia nobis quo rerum, aliquid animi repudiandae nostrum perspiciatis praesentium modi, aut eum veniam id molestiae soluta reiciendis at sed! At, quasi quod? Dolorem distinctio, culpa voluptas exercitationem asperiores ipsam nostrum molestiae. Consectetur inventore, quas excepturi iste aspernatur, modi aliquam nesciunt, dolore commodi nostrum hic quae non voluptate dicta fugit laboriosam sed dolor eligendi. Minima, placeat a ratione eius asperiores ipsam, fugiat aliquam exercitationem nesciunt fuga explicabo dicta nulla recusandae ducimus sit vel, temporibus deleniti. Vitae, neque?",
         date: { start: Date.now(), end: Date.now() + 10000000 },
         location: {
           text: "İzmir, Muğla, Sıdacık, 9200 sokak, No 5",
           description: "Sağa Dön Solda",
           city: "İzmir",
-          place: "Tiyatro Salanu",
+          place: "Tiyatro Salanu, Sabah Akşam Buluşalık Diyarı",
           district: "Muğla",
           country: "Türkiye",
           coordinate: {
-            latitude: 0,
-            longitude: 0,
+            latitude: 41.009339,
+            longitude: 28.965892,
           },
         },
         tags: {
-          main: "Sport",
+          main: "art",
           side: ["FRP"],
         },
         photoUrls: [
@@ -145,6 +152,7 @@ export class EventData {
         };
         this.conditions.price = null;
         this.owners[0].isApproved = true;
+        this.general.photoUrls?.reverse();
       }
     }
   }

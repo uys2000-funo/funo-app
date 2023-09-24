@@ -100,25 +100,39 @@
       Şartlar
     </div>
     <q-input outlined v-model.number="eventData.conditions.userLimit" label="Katılımcı Limiti" type="number" lazy-rules />
-    <div class="row no-wrap">
-
+    <div class="row justify-between items-center"
+      style="border:solid 1px rgba(0, 0, 0, 0.24);; padding: 8px;border-radius: 4px">
+      <span>
+        18 Yaş Üstü
+      </span>
+      <q-checkbox v-model="ageLimit" />
     </div>
-    <q-input outlined v-model.number="eventData.conditions.userLimit" label="Katılımcı Limiti" type="number" lazy-rules />
     <div class="row justify-between items-center"
       style="border:solid 1px rgba(0, 0, 0, 0.24);; padding: 8px;border-radius: 4px">
       <span>
         Onaylı katılım
       </span>
-      <q-checkbox v-model="left" />
+      <q-checkbox v-model="eventData.conditions.needsApproval" />
+    </div>
+    <div class="fs18 lh27 fw600">
+      Fiyat
+    </div>
+    <q-input outlined v-model.number="eventData.conditions.userLimit" label="Ödenecek Tutar" type="number" lazy-rules />
+    <div class="fs18 lh27 fw600">
+      Fotoğraf ekle
+    </div>
+    <div style="height: 182px; width:100%;">
+      <image-box :model-value="images" />
     </div>
   </q-form>
 </template>
 <script lang="ts">
 import { EventData } from '@/types/event';
 import { defineComponent } from 'vue';
-
+import ImageBox from "@/components/common/ImageBox.vue"
 export default defineComponent({
   name: "EventCreateView",
+  components: { ImageBox },
   props: {
     directAccess: {
       type: Object
@@ -135,7 +149,8 @@ export default defineComponent({
       time: {
         start: "",
         end: ""
-      }
+      },
+      images: []
     }
   },
   methods: {
@@ -144,6 +159,14 @@ export default defineComponent({
     }
   },
   computed: {
+    ageLimit: {
+      set(value: boolean) {
+        this.eventData.conditions.ageLimit = value ? [0, 18] : [0, 0]
+      },
+      get(): boolean {
+        return this.eventData.conditions.ageLimit && this.eventData.conditions.ageLimit[1] == 18 ? true : false
+      }
+    }
   }
 })
 </script>
