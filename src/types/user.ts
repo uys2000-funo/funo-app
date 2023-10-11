@@ -1,6 +1,30 @@
 import { FirebaseDocument } from "./firebase";
+import { EventMainTag } from "./event";
 
-export class User {
+export class UserMailData {
+  mail!: string;
+
+  constructor(example = false) {
+    this.mail = "";
+
+    if (example) {
+      this.mail = "example@mail.com";
+    }
+  }
+}
+
+export class UserMail {
+  umID?: string;
+  data!: UserMailData;
+  firebaseDocument?: FirebaseDocument;
+
+  constructor(example = false) {
+    this.data = new UserMailData(example);
+    this.firebaseDocument = new FirebaseDocument(example);
+  }
+}
+
+export class UserData {
   general!: {
     name: string;
     phone: string;
@@ -26,12 +50,72 @@ export class User {
     };
   };
   interests?: {
-    main?: string[];
+    main?: EventMainTag[];
     side?: string[];
   };
-  firebase?: FirebaseDocument;
+  constructor(example = false) {
+    this.general = {
+      name: "",
+      phone: "",
+      photoUrl: "",
+    };
+    this.account = {
+      name: "",
+      mail: "",
+    };
+    this.counts = {
+      followers: 0,
+      following: 0,
+      posints: 0,
+      posts: 0,
+      comments: 0,
+      likes: 0,
+      events: 0,
+      participating: 0,
+    };
+    this.settings = {
+      privacy: {
+        showMail: false,
+      },
+    };
+    this.interests = {
+      main: [],
+      side: [],
+    };
+    if (example) {
+      this.general = {
+        name: "name",
+        phone: "0000000000",
+        photoUrl: "",
+      };
+      this.account = {
+        name: "userName",
+        mail: "example@mail.com",
+      };
+      this.counts = {
+        followers: 0,
+        following: 0,
+        posints: 0,
+        posts: 0,
+        comments: 0,
+        likes: 0,
+        events: 0,
+        participating: 0,
+      };
+      this.settings = {
+        privacy: {
+          showMail: false,
+        },
+      };
+      this.interests = {
+        main: ["sport"],
+        side: ["sTag"],
+      };
+    }
+  }
 }
-export class IndividualUser extends User {
+
+export class IndividualUserData extends UserData {
   general: {
     name: string;
     surname: string;
@@ -40,8 +124,8 @@ export class IndividualUser extends User {
     gender: boolean;
     photoUrl: string;
   };
-  constructor() {
-    super();
+  constructor(example = false) {
+    super(example);
     this.general = {
       name: "",
       surname: "",
@@ -50,29 +134,31 @@ export class IndividualUser extends User {
       gender: true,
       photoUrl: "",
     };
-    this.account = {
-      name: "",
-      mail: "",
-    };
-    this.interests = {
-      main: [""],
-      side: [""],
-    };
-    this.counts = {};
-    this.firebase = {
-      ctimestamp: 0,
-      utimestamp: 0,
-      dtimestamp: 0,
-
-      requestCount: 0,
-      updateCount: 0,
-
-      creatorId: "",
-      ownerId: "",
-    };
+    if (example) {
+      this.general = {
+        name: "name",
+        surname: "surname",
+        phone: "0000000000",
+        birthdate: 0,
+        gender: true,
+        photoUrl: "",
+      };
+    }
   }
 }
-export class EnterpriseUser extends User {
+export class IndividualUser {
+  uID?: string;
+  data!: IndividualUserData;
+  firebaseDocument?: FirebaseDocument;
+  constructor(example = false) {
+    this.data = new IndividualUserData(example);
+    this.firebaseDocument = new FirebaseDocument(example);
+    if (example) {
+      this.uID = "-uID";
+    }
+  }
+}
+export class EnterpriseUserData extends UserData {
   general: {
     name: string;
     taxNumber: string;
@@ -81,8 +167,8 @@ export class EnterpriseUser extends User {
     photoUrl: string;
     isVerified: boolean;
   };
-  constructor() {
-    super();
+  constructor(example = false) {
+    super(example);
     this.general = {
       name: "",
       taxNumber: "",
@@ -91,26 +177,33 @@ export class EnterpriseUser extends User {
       photoUrl: "",
       isVerified: false,
     };
-    this.account = {
-      name: "",
-      mail: "",
-    };
-    this.interests = {
-      main: [""],
-      side: [""],
-    };
-    this.firebase = {
-      ctimestamp: 0,
-      utimestamp: 0,
-      dtimestamp: 0,
-
-      requestCount: 0,
-      updateCount: 0,
-
-      creatorId: "",
-      ownerId: "",
-    };
+    if (example) {
+      this.general = {
+        name: "enterpriseName",
+        taxNumber: "taxNumber",
+        phone: "0000000000",
+        address: "enterpriseAddress",
+        photoUrl: "",
+        isVerified: false,
+      };
+      this.account = {
+        name: "enterpriseUserName",
+        mail: "eexample@mail.com",
+      };
+    }
+  }
+}
+export class EnterpriseUser {
+  uID?: string;
+  data!: EnterpriseUserData;
+  firebaseDocument?: FirebaseDocument;
+  constructor(example = false) {
+    this.data = new EnterpriseUserData(example);
+    this.firebaseDocument = new FirebaseDocument(example);
+    if (example) {
+      this.uID = "-euID";
+    }
   }
 }
 
-export type UserData = IndividualUser | EnterpriseUser;
+export type FunoUser = IndividualUser | EnterpriseUser;

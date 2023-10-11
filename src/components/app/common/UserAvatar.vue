@@ -3,7 +3,7 @@
     <template v-if="!photoUrl || photoUrl == ''">
       <funo-icon />
     </template>
-    <img :src="photoUrl" style="border: solid 1px white;*">
+    <q-img style="border: solid 1px white;" :src="photoUrl" :ratio="1" />
   </q-avatar>
 </template>
 

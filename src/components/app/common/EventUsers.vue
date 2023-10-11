@@ -24,13 +24,13 @@
 
 <script lang="ts">
 import { PropType, defineComponent } from 'vue';
-import { EventUsers } from "@/types/event"
+import { EventUsersData } from "@/types/event"
 import UserAvatar from "@/components/app/common/UserAvatar.vue"
 export default defineComponent({
   components: { UserAvatar },
   props: {
     eventUsers: {
-      type: Object as PropType<EventUsers>,
+      type: Object as PropType<EventUsersData>,
       required: true
     }
   }

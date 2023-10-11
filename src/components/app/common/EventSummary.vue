@@ -1,10 +1,10 @@
 <template>
   <div class="event-summary" :class="{ 'small': small, }">
-    <router-link :to="`#event-detail?eID=${eventData.eID}?price=${eventData.conditions.price}`">
+    <router-link :to="`#event-detail?eID=${funoEvent.eID}?price=${funoEvent.data.conditions.price}`">
       <div class="event-image">
         <div class="event-image-inner">
-          <template v-if="eventData.general.photoUrls && eventData.general.photoUrls[0]">
-            <q-img class="event-image-component" :src="eventData.general.photoUrls[0]" fit="cover" />
+          <template v-if="funoEvent.data.general.photoUrls && funoEvent.data.general.photoUrls[0]">
+            <q-img class="event-image-component" :src="funoEvent.data.general.photoUrls[0]" fit="cover" />
           </template>
           <template v-else>
             <q-img class="event-image-component" :src="require('@/assets/images/logo/funo-text.svg')" fit="contain" />
@@ -23,18 +23,18 @@
         <div class="event-general-info">
           <div class="event-main-owner">
             <div class="user-avatar">
-              <user-avatar :photo-url="eventData.owners[0].photoUrl" size="inherit" />
+              <user-avatar :photo-url="funoEvent.data.owners[0].photoUrl" size="inherit" />
             </div>
             <div class="user-name">
-              <template v-if="'surname' in eventData.owners[0]">
-                {{ eventData.owners[0].name }} {{ eventData.owners[0].surname }}
+              <template v-if="'surname' in funoEvent.data.owners[0]">
+                {{ funoEvent.data.owners[0].name }} {{ funoEvent.data.owners[0].surname }}
               </template>
               <template v-else>
-                {{ eventData.owners[0].name }}
+                {{ funoEvent.data.owners[0].name }}
               </template>
             </div>
             <div class="user-approve">
-              <template v-if="eventData.owners[0].isApproved">
+              <template v-if="funoEvent.data.owners[0].isApproved">
                 <q-icon size="inherit"><success-icon /></q-icon>
               </template>
             </div>
@@ -49,8 +49,8 @@
                       Başlangıç:
                     </td>
                     <td>
-                      {{ new Date(eventData.general.date.start).toLocaleDateString("tr") }},
-                      {{ new Date(eventData.general.date.start).toLocaleTimeString("tr") }}
+                      {{ new Date(funoEvent.data.general.date.start).toLocaleDateString("tr") }},
+                      {{ new Date(funoEvent.data.general.date.start).toLocaleTimeString("tr") }}
                     </td>
                   </tr>
                   <tr>
@@ -58,25 +58,25 @@
                       Bitiş:
                     </td>
                     <td>
-                      {{ new Date(eventData.general.date.end).toLocaleDateString("tr") }},
-                      {{ new Date(eventData.general.date.end).toLocaleTimeString("tr") }}
+                      {{ new Date(funoEvent.data.general.date.end).toLocaleDateString("tr") }},
+                      {{ new Date(funoEvent.data.general.date.end).toLocaleTimeString("tr") }}
                     </td>
                   </tr>
                 </table>
               </q-tooltip>
             </div>
             <div class="event-name">
-              {{ eventData.general.name }}
+              {{ funoEvent.data.general.name }}
             </div>
           </div>
         </div>
         <div class="event-users">
-          <event-users :event-users="eventData.users" />
+          <event-users :event-users="funoEvent.data.users" />
         </div>
         <div class="event-location-and-price">
           <div class="event-location-or-app">
             <q-icon class="location-or-app-icon" size="20px">
-              <template v-if="'place' in eventData.general.location">
+              <template v-if="'place' in funoEvent.data.general.location">
                 <location-icon />
               </template>
               <template v-else>
@@ -84,17 +84,17 @@
               </template>
             </q-icon>
             <div class="location-or-app-text">
-              <template v-if="'place' in eventData.general.location">
-                {{ eventData.general.location.place }}
+              <template v-if="'place' in funoEvent.data.general.location">
+                {{ funoEvent.data.general.location.place }}
               </template>
               <template v-else>
-                {{ eventData.general.location.app }}
+                {{ funoEvent.data.general.location.app }}
               </template>
             </div>
           </div>
-          <template v-if="eventData.conditions.price">
+          <template v-if="funoEvent.data.conditions.price">
             <div class="event-price">
-              {{ eventData.conditions.price }} ₺
+              {{ funoEvent.data.conditions.price }} ₺
             </div>
           </template>
         </div>
@@ -104,7 +104,7 @@
 </template>
 
 <script lang="ts">
-import { EventData } from '@/types/event';
+import { FunoEvent } from '@/types/event';
 import { PropType, defineComponent } from 'vue';
 
 import UserAvatar from './UserAvatar.vue';
@@ -119,9 +119,9 @@ import WebHookIcon from '@/icons/common/WebHookIcon.vue';
 export default defineComponent({
   components: { HearthIcon, UserAvatar, SuccessIcon, EventUsers, LocationIcon, WebHookIcon, },
   props: {
-    eventData: {
-      type: Object as PropType<EventData>,
-      default: new EventData(true, true)
+    funoEvent: {
+      type: Object as PropType<FunoEvent>,
+      default: new FunoEvent(true, true)
     },
     small: {
       type: Boolean,
@@ -130,7 +130,7 @@ export default defineComponent({
   },
   computed: {
     mainTag() {
-      const tag = this.eventData.general.tags.main;
+      const tag = this.funoEvent.data.general.tags.main;
       switch (tag) {
         case "art": return "Sanat";
         case "education": return "Eğitim";
@@ -142,11 +142,11 @@ export default defineComponent({
       }
     },
     mainTagColor() {
-      return `background-color: var(--color-category-${this.eventData.general.tags.main})`;
+      return `background-color: var(--color-category-${this.funoEvent.data.general.tags.main})`;
     },
     eventShortTime() {
-      const start = new Date(this.eventData.general.date.start);
-      const end = new Date(this.eventData.general.date.end);
+      const start = new Date(this.funoEvent.data.general.date.start);
+      const end = new Date(this.funoEvent.data.general.date.end);
       return start.toLocaleDateString("tr", { day: "2-digit", month: "long", weekday: "long" }).replace(/ /g, ", ") + ", " +
         start.toLocaleTimeString("tr", { hour: "2-digit", minute: "2-digit" }) + " - " +
         end.toLocaleTimeString("tr", { hour: "2-digit", minute: "2-digit" })

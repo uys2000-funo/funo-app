@@ -26,6 +26,7 @@ $color-info: #31ccec;
 
 // Category Colors
 $color-category-art: #c81800;
+$color-category-meet: #c81800;
 $color-category-tech: #02577a;
 $color-category-music: #30b254;
 $color-category-education: #02577a;
@@ -39,6 +40,8 @@ $color-category-sport: #30b254;
   --color-button-text: #{$color-button-text};
 
   --color-primary: #{$color-primary};
+  --color-primary1: #{rgba($color-primary, 0.2)};
+  --color-primary2: #{rgba($color-primary, 0.5)};
   --color-alert: #{$color-alert};
   --color-negative: #{$color-negative};
   --color-positive: #{$color-positive};
@@ -46,6 +49,7 @@ $color-category-sport: #30b254;
 
   // Category#{}s
   --color-category-art: #{$color-category-art};
+  --color-category-meet: #{$color-category-meet};
   --color-category-tech: #{$color-category-tech};
   --color-category-music: #{$color-category-music};
   --color-category-education: #{$color-category-education};

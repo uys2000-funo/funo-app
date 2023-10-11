@@ -105,7 +105,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 
-import { UserData } from '@/types/user'
+import { FunoUser } from '@/types/user'
 import { getLocalUserData } from '@/services/app/user'
 
 import UserAvatar from '@/components/app/common/UserAvatar.vue'
@@ -117,7 +117,7 @@ export default defineComponent({
   components: { UserAvatar, SearchIcon, SideScroll },
   data() {
     return {
-      userData_: undefined as UserData | undefined,
+      userData_: undefined as FunoUser | undefined,
       searchValue: "",
       tab: "events"
     }
@@ -132,7 +132,7 @@ export default defineComponent({
     }
   },
   computed: {
-    userData(): undefined | UserData {
+    userData(): undefined | FunoUser {
       if (this.userData_) return this.userData_
       this.getLocalUserData()
       return undefined

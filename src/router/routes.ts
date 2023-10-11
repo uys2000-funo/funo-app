@@ -56,6 +56,16 @@ const routes: Array<RouteRecordRaw> = [
         name: "UserProfileView",
         component: () => import("@/views/UserProfileView.vue"),
       },
+      {
+        path: "messages",
+        name: "MessagesView",
+        component: () => import("@/views/MessagesView.vue"),
+      },
+      {
+        path: "notifications",
+        name: "NotificationsView",
+        component: () => import("@/views/NotificationsView.vue"),
+      },
     ],
   },
   // #endregion
@@ -88,6 +98,17 @@ const routes: Array<RouteRecordRaw> = [
         },
         component: () => import("@/views/EventCreateView.vue"),
       },
+      {
+        path: "messages",
+        name: "MessageView",
+        props: {
+          directAccess: {
+            headerText: "Etkinlik Oluştur",
+            buttonText: "Oluştur",
+          },
+        },
+        component: () => import("@/views/MessageView.vue"),
+      },
     ],
   },
   // #endregion
@@ -95,6 +116,18 @@ const routes: Array<RouteRecordRaw> = [
     name: "test",
     path: "/test",
     component: () => import("@/views/TestView.vue"),
+  },
+  {
+    name: "TestLayout",
+    path: "/tests",
+    component: () => import("@/layouts/DefaultLayout.vue"),
+    children: [
+      {
+        name: "DatabaseUpdate",
+        path: "database-update",
+        component: () => import("@/tests/DatabaseUpdate.vue"),
+      },
+    ],
   },
 ];
 

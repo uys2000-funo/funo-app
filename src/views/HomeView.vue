@@ -46,10 +46,9 @@
     </div>
     <!-- #rendregion -->
     <side-scroll style="height: 279px; width: 100%; overflow-y: visible;">
-      <event-summary small :event-data="exampleEvent" />
-      <event-summary small :event-data="exampleEvent2" />
-      <event-summary small :event-data="exampleEvent" />
-      <event-summary small :event-data="exampleEvent2" />
+      <template v-for="event, i in [...events].reverse()" :key="i">
+        <event-summary small :funo-event="event" />
+      </template>
     </side-scroll>
     <!-- #rendregion -->
     <!-- #region Popular Events -->
@@ -65,10 +64,9 @@
     </div>
     <!-- #rendregion -->
     <side-scroll style="height: 279px; width: 100%;">
-      <event-summary small :event-data="exampleEvent" />
-      <event-summary small :event-data="exampleEvent2" />
-      <event-summary small :event-data="exampleEvent" />
-      <event-summary small :event-data="exampleEvent2" />
+      <template v-for="event, i in events" :key="i">
+        <event-summary small :funo-event="event" />
+      </template>
     </side-scroll>
     <!-- #rendregion -->
     <!-- #region Popular Events -->
@@ -84,10 +82,9 @@
     </div>
     <!-- #rendregion -->
     <side-scroll style="height: 279px; width: 100%;">
-      <event-summary small :event-data="exampleEvent" />
-      <event-summary small :event-data="exampleEvent2" />
-      <event-summary small :event-data="exampleEvent" />
-      <event-summary small :event-data="exampleEvent2" />
+      <template v-for="event, i in events" :key="i">
+        <event-summary small :funo-event="event" />
+      </template>
     </side-scroll>
     <!-- #rendregion -->
 
@@ -104,16 +101,18 @@ import ArrowIcon from "@/icons/common/ArrowIcon.vue"
 import SideScroll from "@/components/app/common/SideScroll.vue"
 import EventSummary from '@/components/app/common/EventSummary.vue';
 
-import { EventData } from '@/types/event';
+import { FunoEvent } from '@/types/event';
 export default defineComponent({
   components: { LocationIcon, ArrowIcon, SideScroll, EventSummary, },
   data() {
     return {
-      exampleEvent: new EventData(true, true),
-      exampleEvent2: new EventData(false, true),
+      events: [] as FunoEvent[]
     }
   },
-  computed: {
+  mounted() {
+    for (let i = 0; i < 15; i++) {
+      this.events.push(new FunoEvent(Math.random() < 0.5, true))
+    }
   }
 })
 </script>

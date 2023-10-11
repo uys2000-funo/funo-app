@@ -61,6 +61,15 @@
       </div>
     </template>
   </dialog-with-slot>
+
+  <dialog-with-slot v-model:show="showMessage" fullscreen use-back-button>
+    <message-view />
+    <template #header>
+      <span class="ctitle fs15 fw600 lh19">
+        Sohbet
+      </span>
+    </template>
+  </dialog-with-slot>
 </template>
 
 <script lang="ts">
@@ -69,8 +78,9 @@ import { defineComponent } from 'vue';
 import DialogWithSlot from '@/components/dialogs/DialogWithSlot.vue';
 import EventDetailView from '@/views/EventDetailView.vue';
 import EventCreateView from '@/views/EventCreateView.vue';
+import MessageView from '@/views/MessageView.vue';
 export default defineComponent({
-  components: { DialogWithSlot, EventDetailView, EventCreateView },
+  components: { DialogWithSlot, EventDetailView, EventCreateView, MessageView },
   computed: {
     showEventDetail: {
       get() {
@@ -87,7 +97,15 @@ export default defineComponent({
       set() {
         this.$router.go(-1)
       }
-    }
+    },
+    showMessage: {
+      get(): boolean {
+        return this.$route.query.chat != "" && this.$route.query.chat != undefined
+      },
+      set() {
+        this.$router.go(-1)
+      }
+    },
   }
 })
 

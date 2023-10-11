@@ -1,7 +1,7 @@
 <template>
   <div class="discover-page">
     <side-scroll>
-
+      <!-- Buraya Story gelcek ilerde -->
     </side-scroll>
     <sticky-flow>
       <q-tabs v-model="page" no-caps class="discover-page-tabs" active-class="discover-page-tabs-active"
@@ -27,17 +27,19 @@
         <event-summary :event-data="exampleEvent2" />
       </q-carousel-slide>
     </q-carousel>
-
   </div>
 </template>
 
 <script lang="ts">
-import { EventData } from '@/types/event';
 import { defineComponent } from 'vue';
+import { getLayoutQueries } from "@/services/app/router"
+
+import { EventData } from '@/types/event';
 
 import EventSummary from '@/components/app/common/EventSummary.vue';
 import StickyFlow from '@/components/app/common/StickyFlow.vue';
 import SideScroll from '@/components/app/common/SideScroll.vue';
+
 import { IndividualUser, EnterpriseUser } from '@/types/user';
 
 export default defineComponent({
@@ -58,7 +60,7 @@ export default defineComponent({
         else return "#followedUsers"
       },
       set(value: string) {
-        this.$router.push(value)
+        this.$router.push({ hash: value, query: { ...getLayoutQueries(this.$route) } })
       }
     }
   }

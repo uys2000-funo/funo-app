@@ -1,7 +1,7 @@
 <template>
   <q-dialog v-model="value" :maximized="fullscreen">
     <div class="dialog-screen">
-      <div class="column no-wrap bg-white" style="max-height: 100vh;">
+      <div class="column no-wrap bg-white" style="max-height: 100vh; height: 100%;">
         <div class="dialog-header">
           <div class="row flex-center" style="position: relative; padding: 16px;">
             <slot name="header" />
@@ -23,7 +23,7 @@
             </template>
           </div>
         </div>
-        <div class="dialog-content" style="flex-shrink: 2; height: 100%; overflow: hidden auto ;">
+        <div class="dialog-content" style="flex-shrink: 2; height: 100%; overflow: hidden auto; flex-grow: 1;">
           <slot />
         </div>
         <template v-if="$slots.footer">
@@ -60,7 +60,8 @@ export default defineComponent({
     return {
       multipleClickShield: false,
     };
-  }, computed: {
+  },
+  computed: {
     value: {
       get() {
         return this.show;

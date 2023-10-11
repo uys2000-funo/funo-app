@@ -1,5 +1,5 @@
 <template>
-  <CalendarContainer>
+  <CalendarContainer style="height: 75vh;">
 
   </CalendarContainer>
 </template>

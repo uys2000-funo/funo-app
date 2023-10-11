@@ -167,7 +167,7 @@
   <user-agreement :show="showAgreement" />
 </template>
 <script lang="ts">
-import { IndividualUser, EnterpriseUser } from "@/types/user"
+import { IndividualUserData, EnterpriseUserData } from "@/types/user"
 import { Component, defineComponent } from 'vue'
 import UserAgreement from "@/components/dialogs/UserAgreement.vue"
 import FunoTextIcon from "@/icons/logo/FunoTextIcon.vue"
@@ -181,8 +181,8 @@ export default defineComponent({
   components: { FunoTextIcon, RegisterIcon, RegisterInnerIcon, UserAgreement },
   data() {
     return {
-      individualUser: { general: {}, account: {}, firebase: {} } as IndividualUser,
-      enterpriseUser: { general: {}, account: {}, firebase: {} } as EnterpriseUser,
+      individualUser: new IndividualUserData(),
+      enterpriseUser: new EnterpriseUserData(),
       birthdate: "",
       gender: undefined as { value: boolean } | undefined,
       password: "",
@@ -219,7 +219,7 @@ export default defineComponent({
         user.general.birthdate = new Date(parseInt(birthdate[2]), parseInt(birthdate[1]), parseInt(birthdate[0])).getMilliseconds()
         user.general.gender = this.gender?.value as boolean
       } else user = this.enterpriseUser
-      user.interests = { main: [""], side: [""] }
+      user.interests = { main: [], side: [] }
 
       //Create User
       const body = { password: this.password, photoUrl: "null", user: prepeareRequest(user) }

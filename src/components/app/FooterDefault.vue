@@ -1,8 +1,8 @@
 <template>
   <q-footer reveal class="ctitle bg-white">
     <div class="full-width row justify-around" style="height: 78px; overflow-y:visible; padding-bottom: 18px;">
-      <q-btn flat dense rounded no-caps style="width: 72px; height: 42px; margin-top: 12px;" :to="{ name: 'HomeView' }"
-        :disable="isHomeActive">
+      <q-btn flat dense rounded no-caps style="width: 72px; height: 42px; margin-top: 12px;"
+        :to="{ name: 'HomeView', query: { showLogo: 'true', showHiToUser: 'true' } }" :disable="isHomeActive">
         <div class="column justify-center content-center items-center" style="gap:2px">
           <q-icon size="24px">
             <home-icon />
@@ -13,7 +13,7 @@
         </div>
       </q-btn>
       <q-btn flat dense rounded no-caps style="width: 72px; height: 42px; margin-top: 12px;"
-        :to="{ name: 'CalendarView' }" :disable="isCalendarActive">
+        :to="{ name: 'CalendarView', query: { showLogo: 'true' } }" :disable="isCalendarActive">
         <div class="column justify-center content-center items-center" style="gap:2px">
           <q-icon size="24px">
             <calendar-plus-icon />
@@ -24,8 +24,8 @@
         </div>
       </q-btn>
       <q-btn flat dense round no-caps class="bg-secondary"
-        style="width: 69px; height: 69px; border: 1px solid #3C485332; margin-top: -9px;" :to="{ name: 'DiscoverView' }"
-        :disable="isDiscoverActive">
+        style="width: 69px; height: 69px; border: 1px solid #3C485332; margin-top: -9px;"
+        :to="{ name: 'DiscoverView', query: { showLogo: 'true', showHiToUser: 'true' } }" :disable="isDiscoverActive">
         <div class=" column justify-center content-center items-center" style="gap:2px">
           <q-icon size="28px">
             <funo-icon :color="isDiscoverActive ? undefined : '#3C4853'" />
@@ -35,8 +35,8 @@
           </span>
         </div>
       </q-btn>
-      <q-btn flat dense rounded no-caps style="width: 72px; height: 42px; margin-top: 12px;" :to="{ name: 'MapView' }"
-        :disable="isMapActive">
+      <q-btn flat dense rounded no-caps style="width: 72px; height: 42px; margin-top: 12px;"
+        :to="{ name: 'MapView', query: { showLogo: 'true' } }" :disable="isMapActive">
         <div class="column justify-center content-center items-center" style="gap:2px">
           <q-icon size=" 24px">
             <world-icon />
@@ -47,7 +47,7 @@
         </div>
       </q-btn>
       <q-btn flat dense rounded no-caps style="width: 72px; height: 42px; margin-top: 12px;"
-        :to="{ name: 'UserProfileView' }" :disable="isUserActive">
+        :to="{ name: 'UserProfileView', query: { showLogo: 'true' } }" :disable="isUserActive">
         <div class="column justify-center content-center items-center" style="gap:2px">
           <q-icon size="24px">
             <account-icon />
