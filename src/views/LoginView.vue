@@ -98,6 +98,7 @@ import { signInWithGoogle, signInWithApple, signInWithEmailAndPassword } from '@
 import { signInFirebaseWithEmailAndPassword, signInWithGoogleCredential, } from '@/services/firebase/authentication'
 import { getUserData } from '@/services/app/user'
 export default defineComponent({
+  name: "LoginView",
   components: { TopColor, FunoTextIcon, LoginIcon, ForgotIcon, IconApple, IconGoogle },
   data() {
     return {

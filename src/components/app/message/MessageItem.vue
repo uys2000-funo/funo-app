@@ -1,8 +1,8 @@
 <template>
-  <div class="message-balloon" :class="{ sender: isSender }">
-    <div class="message-balloon-area">
+  <div q-page="message-balloon" :class="{ sender: isSender }">
+    <div q-page="message-balloon-area">
       <user-avatar :photo-url="message.data.photoUrl" size="36px" />
-      <div class="message-balloon-area-balloon">
+      <div q-page="message-balloon-area-balloon">
         {{ message.data.message }}
       </div>
     </div>

@@ -1,16 +1,8 @@
 import { OnlineAddress, PhysicalAddress } from "./address";
-import { FirebaseDocument } from "./firebase";
+import { FirebaseDocument, FirebasePagination } from "./firebase";
 
-const urls = [
-  "https://marketplace.canva.com/EAFHfL_zPBk/1/0/1600w/canva-yellow-inspiration-modern-instagram-profile-picture-kpZhUIzCx_w.jpg",
-  "https://newprofilepic.photo-cdn.net//assets/images/article/profile.jpg?90af0c8",
-  "https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-  "https://images.ctfassets.net/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=1200&h=992&fl=progressive&q=70&fm=jpg",
-  "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?cs=srgb&dl=pexels-pixabay-220453.jpg&fm=jpg",
-  "https://media.istockphoto.com/id/1386479313/photo/happy-millennial-afro-american-business-woman-posing-isolated-on-white.webp?b=1&s=170667a&w=0&k=20&c=ahypUC_KTc95VOsBkzLFZiCQ0VJwewfrSV43BOrLETM=",
-  "https://leadership.ng/wp-content/uploads/2023/03/davido.png",
-];
-
+import { userPhotoUrls, eventPhotoUrls } from "./examples";
+import { addExamplesToData } from "@/services/app/ExampleService";
 export type EventMainTag =
   | "sport"
   | "education"
@@ -92,7 +84,15 @@ export class EventGeneralData {
       this.location = !isOnline
         ? new PhysicalAddress(true)
         : new OnlineAddress(true);
-      this.photoUrls = [];
+      const addImage = () => {
+        if (Math.random() < 0.8) {
+          this.photoUrls.push(
+            eventPhotoUrls[Math.floor(Math.random() * eventPhotoUrls.length)]
+          );
+          addImage();
+        }
+      };
+      addImage();
     }
   }
 }
@@ -107,7 +107,7 @@ export class EventUsersData {
       const addPerson = () => {
         if (Math.random() < 0.8) {
           this.userPhotoUrls.push(
-            urls[Math.floor(Math.random() * urls.length)]
+            userPhotoUrls[Math.floor(Math.random() * userPhotoUrls.length)]
           );
           this.userCount++;
           addPerson();
@@ -135,7 +135,8 @@ export class EventOwnerData {
     if (example) {
       this.uID = Math.random() < 0.5 ? "-uID" : "-euID";
       this.name = Math.random() < 0.5 ? "Mehmet" : "Funo";
-      this.photoUrl = urls[Math.floor(Math.random() * urls.length)];
+      this.photoUrl =
+        userPhotoUrls[Math.floor(Math.random() * userPhotoUrls.length)];
       this.email = "example@mail.com";
       this.phone = "+9055163983619";
       this.isApproved = Math.random() < 0.5 ? true : false;
@@ -168,5 +169,34 @@ export class FunoEvent {
       this.eID = "-eID";
     }
     if (isExample && isOnline) this.eID = "-oeID";
+  }
+}
+export class FunoEvents {
+  data!: FunoEvent[];
+  firebasePagination!: FirebasePagination;
+  constructor(isExample = false) {
+    this.data = [];
+    this.firebasePagination = new FirebasePagination(isExample);
+    if (isExample) addExamplesToData(FunoEvent, this.data, [true, true]);
+  }
+}
+
+export class CalendarFunoEvents {
+  data!: Array<FunoEvent[]>;
+  firebasePagination!: FirebasePagination;
+  constructor(length = 31, isExample = false) {
+    this.data = [];
+    for (let i = 0; i < length; i++) {
+      this.data.push([]);
+    }
+    this.firebasePagination = new FirebasePagination(isExample);
+    if (isExample) {
+      for (let i = 0; i < length; i++) {
+        const data = [];
+        if (Math.random() < 0.1) data.push(new FunoEvent(true, true));
+        if (Math.random() < 0.1) data.push(new FunoEvent(false, true));
+        this.data[i] = data;
+      }
+    }
   }
 }

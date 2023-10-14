@@ -26,6 +26,7 @@
 <script lang="ts">
 import FunoTextIcon from "@/icons/logo/FunoTextIcon.vue"
 export default {
+  name: "LandingView",
   components: { FunoTextIcon }
 }
 </script>

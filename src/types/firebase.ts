@@ -45,20 +45,20 @@ export class FirebaseDocument {
   }
 }
 
-export class FirabasePagination {
+export class FirebasePagination {
   startDate!: number;
   count!: number;
   direction?: "desc" | "asc";
   /**
-   * FirabasePagination Object
-   * @param {boolean} isExample - Creates a example FirabasePagination
+   * FirebasePagination Object
+   * @param {boolean} isExample - Creates a example FirebasePagination
    */
-  constructor(example = false) {
+  constructor(isExample = false) {
     this.startDate = Date.now();
     this.count = 0;
     this.direction = "desc";
 
-    if (example) {
+    if (isExample) {
       this.count = 10;
     }
   }

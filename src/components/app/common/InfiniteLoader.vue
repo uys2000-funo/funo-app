@@ -4,7 +4,12 @@
       <slot />
       <template v-if="isLoading">
         <div class="text-center">
-          <q-spinner-ball color="primary" size="48px" />
+          <template v-if="isReversed">
+            <q-spinner-ball color="primary" size="48px" />
+          </template>
+          <template v-else>
+            <q-spinner-dots color="primary" size="48px" />
+          </template>
         </div>
       </template>
     </div>
@@ -14,8 +19,10 @@
 <script lang="ts">
 import { PropType, defineComponent } from 'vue';
 
+import { ScrollDetail } from "@/types/quasar"
 export default defineComponent({
   name: "InfiniteLoader",
+  inject: ["addToOnScrollFunctions", "removeFromOnScrollFunctions"],
   props: {
     isReversed: {
       type: Boolean
@@ -39,16 +46,17 @@ export default defineComponent({
     }
   },
   methods: {
-    startLoader() {
+    startLoader(isLayoutScroll: boolean) {
       this.isLoading = true
       setTimeout(() => {
-        const target = this.$refs.loader as HTMLDivElement
+        const t = isLayoutScroll ? ".scroll" : ".infinite-loader"
+        const target = document.querySelector(t) as HTMLDivElement
         const toScroll = target.scrollHeight * (this.isReversed ? -1 : 1)
-        target.scrollTo(0, toScroll)
+        target.scrollTo({ left: 0, top: toScroll, behavior: "smooth" })
       })
     },
-    runLoader() {
-      this.startLoader()
+    runLoader(isLayoutScroll = false) {
+      this.startLoader(isLayoutScroll)
       this.onLoad(this.index, this.endLoader)
     },
     endLoader(done: boolean | undefined) {
@@ -56,13 +64,26 @@ export default defineComponent({
       this.done = done ? true : false
       this.index++
     },
-    onScroll(event: UIEvent) {
+    onScroll(event: UIEvent) { //use this if scroll hapens in .infinit-loader
       const target = event.target as HTMLDivElement
       let scrollMax = (target.scrollHeight - target.offsetHeight) * (this.isReversed ? -1 : 1)
-      if (scrollMax == target.scrollTop) {
+      if (scrollMax == target.scrollTop && !this.done && !this.isLoading) {
         this.runLoader()
       }
+    },
+    onLayoutScroll(d: ScrollDetail, maxH: number) {//use this if scroll hapens in .scroll
+      if (maxH == d.position) this.runLoader(true)
     }
+  },
+  mounted() {
+    setTimeout(() => {
+      (this.addToOnScrollFunctions as any)(this.onLayoutScroll)
+    })
+  },
+  beforeUnmount() {
+    setTimeout(() => {
+      (this.addToOnScrollFunctions as any)(this.onLayoutScroll)
+    })
   }
 })
 </script>

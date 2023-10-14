@@ -5,7 +5,7 @@
         <div class="event-images-inner">
           <q-carousel v-model="slide" transition-prev="slide-right" transition-next="slide-left" animated swipeable arrows
             navigation infinite control-color="primary" class="rounded-borders" style="height: 240px;">
-            <template v-for="photoUrl, index in eventData.general.photoUrls" :key="index">
+            <template v-for="photoUrl, index in data.general.photoUrls" :key="index">
               <q-carousel-slide :name="index" class="q-pa-none column no-wrap flex-center"
                 :img-src="photoUrl"></q-carousel-slide>
             </template>
@@ -29,10 +29,10 @@
           <div class="event-owner-info">
             <div class="flex flex-center" style="position: absolute; bottom: 16px; left: 16px; gap: 8px;">
               <div class="event-owner-avatar">
-                <user-avatar :photo-url="eventData.owners[0].photoUrl" />
+                <user-avatar :photo-url="data.owners[0].photoUrl" />
               </div>
               <div class="event-owner-name">
-                <span class="cbtext fw600 fs16 lh20">{{ eventData.owners[0].name }}</span>
+                <span class="cbtext fw600 fs16 lh20">{{ data.owners[0].name }}</span>
               </div>
             </div>
           </div>
@@ -44,16 +44,16 @@
         <div class="event-header">
           <div class="event-header">
             <span class="ctitle fs18 fw600 lh22">
-              {{ eventData.general.name }}
+              {{ data.general.name }}
             </span>
           </div>
           <div class="event-sub-header">
             <span class="cstitle fs13 fw400 lh16">
-              <template v-if="'place' in eventData.general.location">
-                {{ eventData.general.location.place }}
+              <template v-if="'place' in data.general.location">
+                {{ data.general.location.place }}
               </template>
               <template v-else>
-                {{ eventData.general.location.app }}
+                {{ data.general.location.app }}
               </template>
             </span>
           </div>
@@ -65,7 +65,7 @@
                 <calendar-icon />
               </q-icon>
               <span class="fw600 fs14 lh17">
-                {{ new Date(eventData.general.date.start).toLocaleDateString("tr", { day: "2-digit", month: "long" }) }}
+                {{ new Date(data.general.date.start).toLocaleDateString("tr", { day: "2-digit", month: "long" }) }}
               </span>
             </div>
           </div>
@@ -76,17 +76,17 @@
               </q-icon>
               <span class="fw600 fs14 lh17">
                 {{
-                  new Date(eventData.general.date.start).toLocaleTimeString("tr", { hour: "2-digit", minute: "2-digit" })
+                  new Date(data.general.date.start).toLocaleTimeString("tr", { hour: "2-digit", minute: "2-digit" })
                 }}
                 -
                 {{
-                  new Date(eventData.general.date.end).toLocaleTimeString("tr", { hour: "2-digit", minute: "2-digit" })
+                  new Date(data.general.date.end).toLocaleTimeString("tr", { hour: "2-digit", minute: "2-digit" })
                 }}
               </span>
             </div>
           </div>
           <div class="event-users">
-            <event-users :event-users="eventData.users" />
+            <event-users :event-users="data.users" />
           </div>
         </div>
         <div class="seperator">
@@ -94,7 +94,7 @@
         </div>
         <div class="event-description">
           <span class="ctext fw400 fs14">
-            {{ eventData.general.description }}
+            {{ data.general.description }}
           </span>
         </div>
       </div>
@@ -102,19 +102,19 @@
     <div class="event-rules" style="padding: 0 16px;">
       <div class="cntext fw600 fs14 column"
         style="border: 1px solid #00000010; border-radius: 8px; gap: 8px; padding: 12px;">
-        <span v-if="eventData.conditions.ageLimit && eventData.conditions.ageLimit[0] != 0">
-          -{{ eventData.conditions.ageLimit[0] }} yaşından küçükler giremez. Uygun görülmeyen kişiler içeriye
+        <span v-if="data.conditions.ageLimit && data.conditions.ageLimit[0] != 0">
+          -{{ data.conditions.ageLimit[0] }} yaşından küçükler giremez. Uygun görülmeyen kişiler içeriye
           alınmayacaktır.
         </span>
-        <span v-if="eventData.conditions.ageLimit && eventData.conditions.ageLimit[1] != 0">
-          -{{ eventData.conditions.ageLimit[1] }} yaşından büyükler giremez. Uygun görülmeyen kişiler içeriye
+        <span v-if="data.conditions.ageLimit && data.conditions.ageLimit[1] != 0">
+          -{{ data.conditions.ageLimit[1] }} yaşından büyükler giremez. Uygun görülmeyen kişiler içeriye
           alınmayacaktır.
         </span>
       </div>
     </div>
     <div class="event-location">
       <div class="column" style="gap:8px; padding: 0 16px;">
-        <template v-if="'place' in eventData.general.location">
+        <template v-if="'place' in data.general.location">
           <div class="event-location-header">
             <div class="event-location-title">
               <span class="fw600 fs14 ctitle">
@@ -123,7 +123,7 @@
             </div>
             <div class="event-location-sub-title">
               <span class="fw400 fs12 cstitle">
-                {{ eventData.general.location.text }}
+                {{ data.general.location.text }}
               </span>
             </div>
           </div>
@@ -139,8 +139,8 @@
               </span>
             </div>
             <div class="event-location-sub-title">
-              <a class="fw400 fs12 cstitle" :href="eventData.general.location.url" target="_blank">
-                {{ eventData.general.location.app }}
+              <a class="fw400 fs12 cstitle" :href="data.general.location.url" target="_blank">
+                {{ data.general.location.app }}
               </a>
             </div>
           </div>
@@ -151,7 +151,7 @@
 </template>
 
 <script lang="ts">
-import { EventData } from '@/types/event';
+import { FunoEvent } from '@/types/event';
 import { defineComponent } from 'vue';
 
 import "ol/ol.css";
@@ -178,12 +178,12 @@ export default defineComponent({
     return {
       slide: 0,
       map: undefined as Map | undefined,
-      eventData_: new EventData(false, false),
+      FunoEvent_: new FunoEvent(false, false),
     }
   },
   computed: {
     mainTag() {
-      const tag = this.eventData.general.tags.main;
+      const tag = this.data.general.tags.main;
       switch (tag) {
         case "art": return "Sanat";
         case "education": return "Eğitim";
@@ -195,33 +195,36 @@ export default defineComponent({
       }
     },
     mainTagColor() {
-      return `background-color: var(--color-category-${this.eventData.general.tags.main})`;
+      return `background-color: var(--color-category-${this.data.general.tags.main})`;
     },
-    eventData: {
-      set(value: EventData) {
-        this.eventData_ = value
+    funoEvent: {
+      set(value: FunoEvent) {
+        this.FunoEvent_ = value
       },
       get() {
         const hasTargetEvent = this.$route.params.eID as string | undefined
-        this.setEventData(hasTargetEvent)
-        return this.eventData_
+        this.setFunoEvent(hasTargetEvent)
+        return this.FunoEvent_
       }
+    },
+    data() {
+      return this.funoEvent.data
     },
   },
   methods: {
     callback() {
       console.log("")
     },
-    setEventData(eID: string | undefined) {
-      if (!eID) this.eventData_ = new EventData(false, true)
+    setFunoEvent(eID: string | undefined) {
+      if (!eID) this.FunoEvent_ = new FunoEvent(false, true)
     },
   },
   mounted() {
-    if ("place" in this.eventData.general.location) {
+    if ("place" in this.data.general.location) {
       this.map = new Map({ target: "map" })
       const cordinates = [
-        this.eventData.general.location.coordinate.longitude,
-        this.eventData.general.location.coordinate.latitude,
+        this.data.general.location.coordinate.longitude,
+        this.data.general.location.coordinate.latitude,
       ]
       this.map.addLayer(new Tile({ source: new OSM() }))
       this.map.setView(new View({ center: fromLonLat(cordinates), zoom: 15 }));

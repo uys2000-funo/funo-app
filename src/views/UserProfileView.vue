@@ -1,11 +1,11 @@
 <template>
-  <div v-if="userData">
+  <div v-if="data">
     <div class="yellow-area">
       <div class="column" style="gap:24px; background-color: #FF7F0012; padding: 20px 16px;">
         <div class="profile-info">
           <div class="row" style="gap: 20px;">
             <div class="user-avatar" style="flex-shrink: 1;">
-              <user-avatar :photo-url="userData.general.photoUrl" size="100px" />
+              <user-avatar :photo-url="data.general.photoUrl" size="100px" />
             </div>
             <div class="user-info" style="flex-grow: 1;">
               <div class="column" style="gap:12px">
@@ -13,18 +13,18 @@
                   <div class="column" style="gap:4px">
                     <div class="user-name">
                       <div class="ctitle fw600 fs18 lh18">
-                        <template v-if="'surname' in userData.general">
-                          <span>{{ userData.general.name }} {{ userData.general.surname }}</span>
+                        <template v-if="'surname' in data.general">
+                          <span>{{ data.general.name }} {{ data.general.surname }}</span>
                         </template>
                         <template v-else>
-                          <span>{{ userData.general.name }}</span>
+                          <span>{{ data.general.name }}</span>
                         </template>
                       </div>
                     </div>
                     <div class="user-mail">
                       <div class="cstitle fw400 fs14 lh14">
-                        <span v-if="userData.settings?.privacy?.showMail != true">
-                          {{ userData.account.mail }}
+                        <span v-if="data.settings?.privacy?.showMail != true">
+                          {{ data.account.mail }}
                         </span>
                         <div v-else class="hidden-mail" style="color: transparent;">
                           Mail is hidden by default
@@ -38,7 +38,7 @@
                     <div class="user-point">
                       <div class="column text-center" style="gap:4px">
                         <div class="fs20 fw600 lh24">
-                          {{ userData.counts?.posints ?? 0 }}
+                          {{ data.counts?.posints ?? 0 }}
                         </div>
                         <div class="fs16 fw400 lh20">
                           Puan
@@ -48,7 +48,7 @@
                     <div class="user-followers">
                       <div class="column text-center" style="gap:4px">
                         <div class="fs20 fw600 lh24">
-                          {{ userData.counts?.followers ?? 0 }}
+                          {{ data.counts?.followers ?? 0 }}
                         </div>
                         <div class="fs16 fw400 lh20">
                           Takipçi
@@ -58,7 +58,7 @@
                     <div class="user-following">
                       <div class="column text-center" style="gap:4px">
                         <div class="fs20 fw600 lh24">
-                          {{ userData.counts?.following ?? 0 }}
+                          {{ data.counts?.following ?? 0 }}
                         </div>
                         <div class="fs16 fw400 lh20">
                           Takip
@@ -105,7 +105,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 
-import { FunoUser } from '@/types/user'
+import { FunoUser, IndividualUser, FunoUserData } from '@/types/user'
 import { getLocalUserData } from '@/services/app/user'
 
 import UserAvatar from '@/components/app/common/UserAvatar.vue'
@@ -117,7 +117,7 @@ export default defineComponent({
   components: { UserAvatar, SearchIcon, SideScroll },
   data() {
     return {
-      userData_: undefined as FunoUser | undefined,
+      funoUser: new IndividualUser() as FunoUser,
       searchValue: "",
       tab: "events"
     }
@@ -125,17 +125,14 @@ export default defineComponent({
   methods: {
     getLocalUserData() {
       getLocalUserData.pLogger().then(userData => {
-        this.userData_ = userData
-        console.log("---", this.userData_)
-      }
-      )
+        if (userData) this.funoUser = userData
+      })
     }
   },
   computed: {
-    userData(): undefined | FunoUser {
-      if (this.userData_) return this.userData_
-      this.getLocalUserData()
-      return undefined
+    data(): FunoUserData {
+      if (!this.funoUser.data?.account.mail) this.getLocalUserData()
+      return this.funoUser.data
     },
   },
 })

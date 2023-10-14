@@ -1,5 +1,5 @@
 <template>
-  <q-page style="padding-top: 50px;">
+  <div style="padding-top: 50px;">
     <!-- #region Home View Sticky Header-->
     <q-page-sticky expand position="top" class="bg-white" style="z-index:50">
       <q-toolbar class="text-center ctitle fw600 fs16 lh20 row justify-between" style="padding: 0 16px;">
@@ -88,7 +88,7 @@
     </side-scroll>
     <!-- #rendregion -->
 
-  </q-page>
+  </div>
 </template>
 
 <script lang="ts">
@@ -103,6 +103,7 @@ import EventSummary from '@/components/app/common/EventSummary.vue';
 
 import { FunoEvent } from '@/types/event';
 export default defineComponent({
+  name: "HomeView",
   components: { LocationIcon, ArrowIcon, SideScroll, EventSummary, },
   data() {
     return {

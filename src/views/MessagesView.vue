@@ -7,16 +7,22 @@
         <q-tab class="messages-page-tabs-tab" name="#messages" label="Mesajlarım" />
       </q-tabs>
     </sticky-flow>
-    <q-carousel class=" messages-page-content" v-model="page" transition-prev="slide-right" transition-next="slide-left"
+    <q-carousel class="messages-page-contents" v-model="page" transition-prev="slide-right" transition-next="slide-left"
       swipeable animated control-color="white" height="max-content">
-      <q-carousel-slide class="messages-page-content-page" name="#suggestions">
-        test
+      <q-carousel-slide class="messages-page-contents-content users" name="#suggestions">
+        <infinite-loader :on-load="onLoadUser">
+          <div class="users-list">
+            <template v-for="user, index in users.data" :key="index">
+              <user-item :suggested-user="user" />
+            </template>
+          </div>
+        </infinite-loader>
       </q-carousel-slide>
-      <q-carousel-slide class="messages-page-content-page" name="#messages">
-        <infinite-loader :is-reversed="true">
-          <div class="chat-page-messages-list">
+      <q-carousel-slide class="messages-page-contents-content messages" name="#messages">
+        <infinite-loader :on-load="onLoadMessage">
+          <div class="messages-list">
             <template v-for="messageSummary, index in MessageSummaries" :key="index">
-              <message-summary-vue :u-i-d="(userData?.uID as string)" :message-summary="messageSummary" />
+              <message-list-item :u-i-d="(userData?.uID as string)" :message-summary="messageSummary" />
             </template>
           </div>
         </infinite-loader>
@@ -31,14 +37,15 @@ import { getLocalUserData } from '@/services/app/user'
 import { getLayoutQueries } from "@/services/app/router"
 
 import { MessageSummary } from '@/types/messages';
-import { FunoUser } from '@/types/user';
+import { FunoUser, SuggestedUser, SuggestedUsers } from '@/types/user';
 
 import StickyFlow from '@/components/app/common/StickyFlow.vue';
 import InfiniteLoader from '@/components/app/common/InfiniteLoader.vue';
-import MessageSummaryVue from '@/components/app/message/MessageSummary.vue';
+import MessageListItem from '@/components/app/message/MessageListItem.vue';
+import UserItem from '@/components/app/userSuggestion/UserItem.vue';
 export default defineComponent({
   name: "MessagesView",
-  components: { StickyFlow, InfiniteLoader, MessageSummaryVue },
+  components: { StickyFlow, InfiniteLoader, MessageListItem, UserItem },
   props: {
     directAccess: {
       type: Object
@@ -48,7 +55,8 @@ export default defineComponent({
     return {
       userData_: undefined as FunoUser | undefined,
       tab: "#messages" as "#suggestions" | "#messages",
-      MessageSummaries: [] as MessageSummary[]
+      MessageSummaries: [] as MessageSummary[],
+      users: new SuggestedUsers()
     }
   },
   methods: {
@@ -56,6 +64,30 @@ export default defineComponent({
       getLocalUserData.pLogger().then(userData =>
         this.userData_ = userData
       )
+    },
+    addItemsUser(isFirstTime = true) {
+      if (Math.random() < 0.9 || isFirstTime) {
+        this.users.data.push(new SuggestedUser(true))
+        this.addItemsUser(false)
+      }
+    },
+    onLoadUser(index: number, endLoader: (done?: boolean | undefined) => void) {
+      setTimeout(() => {
+        this.addItemsUser()
+        endLoader(index == 10)
+      }, 10000)
+    },
+    addItemsMessage(isFirstTime = true) {
+      if (Math.random() < 0.9 || isFirstTime) {
+        this.MessageSummaries.push(new MessageSummary(true))
+        this.addItemsMessage(false)
+      }
+    },
+    onLoadMessage(index: number, endLoader: (done?: boolean | undefined) => void) {
+      setTimeout(() => {
+        this.addItemsMessage()
+        endLoader(index == 10)
+      }, 10000)
     }
   },
   computed: {
@@ -75,13 +107,8 @@ export default defineComponent({
     }
   },
   mounted() {
-    const addMessages = (isFirstTime = true) => {
-      if (Math.random() < 0.9 || isFirstTime) {
-        this.MessageSummaries.push(new MessageSummary(true))
-        addMessages(false)
-      }
-    }
-    addMessages()
+    this.addItemsUser()
+    this.addItemsMessage()
   }
 })
 </script>
@@ -91,12 +118,14 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   gap: 0px;
+  height: 100%;
 }
 
 .messages-page-tabs {
   width: 100vw;
   /*background-color: white;*/
   color: var(--color-text);
+  background-color: white;
   font-family: Source Sans Pro;
   font-size: 14px;
   font-style: normal;
@@ -132,10 +161,24 @@ export default defineComponent({
   text-transform: capitalize;
 }
 
-.messages-page-content-page {
+.messages-page-contents {
+  height: 100% !important;
+  flex-shrink: 1;
+  overflow: hidden;
+}
+
+.messages-page-contents-content {
   display: flex;
   flex-direction: column;
   gap: 0px;
   padding: 0 16px;
+  padding-bottom: 10px;
+  overflow: hidden;
+}
+
+.messages-page-contents-content .users-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
 }
 </style>

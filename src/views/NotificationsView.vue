@@ -1,19 +1,11 @@
 <template>
   <div class="notifications-page">
-    <infinite-loader :is-reversed="true">
+    <infinite-loader :is-reversed="false">
       <div class="notifications-page-list">
-        <template v-for="notification, index in notifications.data" :key="index">
-          <div class="notifications-page-list-element">
-            <user-avatar size="56px" :photo-url="notification.data.photoUrl" />
-            <div class="notifications-page-list-element-content">
-              <div class="notifications-page-list-element-content-title">
-                {{ notification.data.title }}
-              </div>
-              <div class="notifications-page-list-element-content-text">
-                {{ notification.data.content }}
-              </div>
-            </div>
-          </div>
+        <template
+          v-for="notification, index in [...notifications.data].sort((a, b) => (b.data.reciveTime - a.data.reciveTime))"
+          :key="index">
+          <notification-item :funo-fotification="notification" />
         </template>
       </div>
     </infinite-loader>
@@ -28,11 +20,10 @@ import { FunoNotifications, FunoNotification } from '@/types/notification';
 import { FunoUser } from '@/types/user';
 
 import InfiniteLoader from '@/components/app/common/InfiniteLoader.vue';
-import UserAvatar from '@/components/app/common/UserAvatar.vue';
-
+import NotificationItem from "@/components/app/notification/NotificationItem.vue"
 export default defineComponent({
   name: "NotificationsView",
-  components: { InfiniteLoader, UserAvatar },
+  components: { InfiniteLoader, NotificationItem },
   props: {
     directAccess: {
       type: Object
@@ -75,19 +66,28 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   gap: 0px;
+  padding-bottom: 10px;
 }
 
 .notifications-page-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 16px;
 }
 
 .notifications-page-list-element {
+  padding: 10px 16px;
   display: flex;
   gap: 8px;
   align-items: center;
+  border-bottom: 1px solid #E8E8E8;
+}
+
+.notifications-page-list-element:last-child {
+  border-bottom: 0px none;
+}
+
+.notifications-page-list-element.attention {
+  background: var(--color-primary1);
 }
 
 .notifications-page-list-element-content {

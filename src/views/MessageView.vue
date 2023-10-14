@@ -1,8 +1,8 @@
 <template>
-  <div class="chat-page">
-    <div class="chat-page-user">
+  <div class="message-page">
+    <div class="message-page-user">
       <user-avatar size="48px" :photo-url="user.data.general.photoUrl" />
-      <div class="chat-page-user-name">
+      <div class="message-page-user-name">
         <template v-if="'surname' in user.data.general">
           {{ user.data.general.name }} {{ user.data.general.surname }}
         </template>
@@ -11,16 +11,16 @@
         </template>
       </div>
     </div>
-    <div class="chat-page-messages">
+    <div class="message-page-messages">
       <infinite-loader :is-reversed="true">
-        <div class="chat-page-messages-list">
+        <div class="message-page-messages-list">
           <template v-for="message, index in messages.data" :key="index">
-            <message-balloon :message="message" :is-sender="message.data.uID == user.uID" />
+            <message-item :message="message" :is-sender="message.data.uID == user.uID" />
           </template>
         </div>
       </infinite-loader>
     </div>
-    <div class="chat-page-input">
+    <div class="message-page-input">
       <q-form @submit.prevent="sendMessage">
         <q-input v-model="message" placeholder="Mesaj" outlined rounded>
           <template #append>
@@ -37,13 +37,14 @@
 import UserAvatar from '@/components/app/common/UserAvatar.vue';
 import InfiniteLoader from '@/components/app/common/InfiniteLoader.vue';
 
-import MessageBalloon from '@/components/app/message/MessageBalloon.vue';
+import MessageItem from '@/components/app/message/MessageItem.vue';
 import { defineComponent } from 'vue';
 
 import { FunoUser, IndividualUser } from '@/types/user';
 import { Message, MessageList } from '@/types/messages';
 export default defineComponent({
-  components: { UserAvatar, InfiniteLoader, MessageBalloon },
+  name: "MessageView",
+  components: { UserAvatar, InfiniteLoader, MessageItem },
   props: {
     directAccess: {
       type: Object
@@ -68,15 +69,14 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.chat-page {
-  height: 100%;
+.message-page {
   display: flex;
   flex-wrap: nowrap;
   overflow: hidden;
   flex-direction: column;
 }
 
-.chat-page-user {
+.message-page-user {
   display: flex;
   align-items: center;
   padding: 16px;
@@ -84,24 +84,24 @@ export default defineComponent({
   background-color: var(--color-primary1);
 }
 
-.chat-page-user-name {
+.message-page-user-name {
   flex-grow: 1;
 }
 
-.chat-page-messages {
+.message-page-messages {
   height: 100%;
   overflow: hidden;
   flex-shrink: 1;
 }
 
-.chat-page-messages-list {
+.message-page-messages-list {
   display: flex;
   flex-direction: column;
   gap: 16px;
   padding: 16px;
 }
 
-.chat-page-input {
+.message-page-input {
   padding: 8px 16px;
 }
 </style>

@@ -1,14 +1,14 @@
 <template>
-  <div class="fit row flex-wrap" style="position: relative; border-radius: 8px; border: 2px #150C0010 solid; gap: 6px;">
+  <div q-page="fit row flex-wrap" style="position: relative; border-radius: 8px; border: 2px #150C0010 solid; gap: 6px;">
     <q-icon size="80px" style="z-index: -1; position: absolute; top:50%; left: 50%; transform: translate(-50%,-50%);">
       <image-icon />
     </q-icon>
-    <div class="row" @click="($refs.input as HTMLInputElement)?.click"
+    <div q-page="row" @click="($refs.input as HTMLInputElement)?.click"
       style="z-index:100; position: absolute; bottom: 12px; right: 12px; padding: 6px;border-radius: 20px; background-color: #150C0072;">
       <q-icon size="16px" style="margin: auto;"><camera-icon /></q-icon>
     </div>
     <q-scroll-area style="height: 100%; width: 100%;">
-      <div class="row flex-wrap" style="gap: 5%; padding: 5%; padding-bottom: 0px;">
+      <div q-page="row flex-wrap" style="gap: 5%; padding: 5%; padding-bottom: 0px;">
         <template v-for="imageURL, index in imageUrls" :key="index">
           <q-img :src="imageURL"
             style="border: solid 1px #00000020; height: 50px; width: 30%; background-color: white; margin-bottom: 5%;" />
@@ -16,7 +16,7 @@
       </div>
     </q-scroll-area>
   </div>
-  <input ref="input" type="file" accept="image/*" class="hidden" @change="addImage" />
+  <input ref="input" type="file" accept="image/*" q-page="hidden" @change="addImage" />
 </template>
 
 <script lang="ts">

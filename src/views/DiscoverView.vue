@@ -43,6 +43,7 @@ import SideScroll from '@/components/app/common/SideScroll.vue';
 import { IndividualUser, EnterpriseUser } from '@/types/user';
 
 export default defineComponent({
+  name: "DiscoverView",
   components: { EventSummary, StickyFlow, SideScroll },
   data() {
     return {

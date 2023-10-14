@@ -178,6 +178,7 @@ import { showAlert } from "@/services/capacitor/dialog"
 import { httpRequest, prepeareRequest } from "@/services/api"
 
 export default defineComponent({
+  name: "RegisterView",
   components: { FunoTextIcon, RegisterIcon, RegisterInnerIcon, UserAgreement },
   data() {
     return {

@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="SourceSans ctitle">
+  <div id="app">
     <router-view />
   </div>
 </template>
@@ -8,11 +8,15 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
+  mounted() {
+    console.log(process.env.VUE_APP_MODE)
+  }
 })
 </script>
 
 <style scoped>
 #app {
+  color: var(--color-title);
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;

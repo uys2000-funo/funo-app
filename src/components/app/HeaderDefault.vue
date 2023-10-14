@@ -1,15 +1,14 @@
 <template>
   <q-header reveal height-hint="107" class="bg-white ctitle">
-    <q-slide-transition>
-      <q-toolbar v-show="showLogo" class="text-center">
+    <template v-if="showLogo">
+      <q-toolbar class="text-center">
         <q-toolbar-title style="padding-top: 8px;">
           <funo-text-icon style="height: 30px;" />
         </q-toolbar-title>
       </q-toolbar>
-    </q-slide-transition>
-    <q-slide-transition>
-      <q-toolbar v-show="showHiToUser" class="text-center ctitle fw600 fs16 lh20"
-        style="padding: 0 16px; border-bottom: 1px solid #E8E8E8;">
+    </template>
+    <template v-if="showHiToUser">
+      <q-toolbar class="text-center ctitle fw600 fs16 lh20" style="padding: 0 16px; border-bottom: 1px solid #E8E8E8;">
         <div class="row flex-center" style="gap:12px">
           <user-avatar :photo-url="userData?.data.general.photoUrl" />
           Merhaba {{ userData?.data.general.name }}
@@ -28,9 +27,9 @@
           </router-link>
         </div>
       </q-toolbar>
-    </q-slide-transition>
-    <q-slide-transition>
-      <div v-show="showViewTitle" class="header-default-view-title-area">
+    </template>
+    <template v-if="showViewTitle">
+      <div class="header-default-view-title-area">
         <div class="header-default-view-title-area-title">
           {{ viewTitle }}
         </div>
@@ -42,7 +41,7 @@
           </q-icon>
         </div>
       </div>
-    </q-slide-transition>
+    </template>
   </q-header>
 </template>
 
@@ -107,6 +106,8 @@ export default defineComponent({
   justify-content: center;
   position: relative;
   padding: 16px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #E8E8E8;
 }
 
 .header-default-view-title-area-title {

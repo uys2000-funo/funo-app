@@ -1,26 +1,12 @@
 <template>
-  <CalendarContainer style="height: 75vh;">
-
-  </CalendarContainer>
+  <div style="width: 400px; height: 750px;">
+    <FunoMap />
+  </div>
 </template>
 <script lang="ts">
+import FunoMap from '@/components/app/common/FunoMap.vue';
 import { defineComponent } from 'vue';
-import CalendarContainer from '@/components/app/common/CalendarContainer.vue';
 export default defineComponent({
-  components: { CalendarContainer }
+  components: { FunoMap }
 })
 </script>
-
-
-<style>
-span {
-  padding: 20px;
-  font-family: Croissant;
-  font-size: 28px;
-  font-style: normal;
-  font-weight: 800;
-  line-height: 124%;
-  /* 14.88px */
-  letter-spacing: -0.3pc;
-}
-</style>

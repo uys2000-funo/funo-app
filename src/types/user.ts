@@ -1,5 +1,7 @@
-import { FirebaseDocument } from "./firebase";
+import { FirebaseDocument, FirebasePagination } from "./firebase";
 import { EventMainTag } from "./event";
+
+import { names, ages, userPhotoUrls, matchReasons } from "./examples";
 
 export class UserMailData {
   mail!: string;
@@ -12,7 +14,6 @@ export class UserMailData {
     }
   }
 }
-
 export class UserMail {
   umID?: string;
   data!: UserMailData;
@@ -23,7 +24,6 @@ export class UserMail {
     this.firebaseDocument = new FirebaseDocument(example);
   }
 }
-
 export class UserData {
   general!: {
     name: string;
@@ -114,7 +114,6 @@ export class UserData {
     }
   }
 }
-
 export class IndividualUserData extends UserData {
   general: {
     name: string;
@@ -206,4 +205,72 @@ export class EnterpriseUser {
   }
 }
 
+export type FunoUserData = IndividualUserData | EnterpriseUserData;
 export type FunoUser = IndividualUser | EnterpriseUser;
+
+export class SuggestedUserGeneralData {
+  name!: string;
+  age!: number;
+  photoUrl!: string;
+  constructor(isExample = false) {
+    this.name = "";
+    this.age = 0;
+    this.photoUrl = "";
+    if (isExample) {
+      this.name = names[Math.floor(Math.random() * names.length)];
+      this.age = ages[Math.floor(Math.random() * ages.length)];
+      this.photoUrl =
+        userPhotoUrls[Math.floor(Math.random() * userPhotoUrls.length)];
+    }
+  }
+}
+
+export class SuggestedUserMatchData {
+  percentage!: number;
+  reason!: string;
+  constructor(isExample = false) {
+    this.percentage = 0;
+    this.reason = "";
+    if (isExample) {
+      this.percentage = Math.floor(Math.random() * 100);
+      this.reason =
+        matchReasons[Math.floor(Math.random() * matchReasons.length)];
+    }
+  }
+}
+
+export class SuggestedUserData {
+  general!: SuggestedUserGeneralData;
+  match!: SuggestedUserMatchData;
+  constructor(isExample = false) {
+    this.general = new SuggestedUserGeneralData(isExample);
+    this.match = new SuggestedUserMatchData(isExample);
+  }
+}
+
+export class SuggestedUser {
+  data!: SuggestedUserData;
+  firebaseDocument!: FirebaseDocument;
+  constructor(isExample = false) {
+    this.data = new SuggestedUserData(isExample);
+    this.firebaseDocument = new FirebaseDocument(isExample);
+  }
+}
+
+export class SuggestedUsers {
+  data!: SuggestedUser[];
+  firebasePagination!: FirebasePagination;
+  constructor(isExample = false) {
+    this.data = [];
+    this.firebasePagination = new FirebasePagination(isExample);
+    if (isExample) {
+      const add = (isFirstTime = true) => {
+        if (Math.random() < 0.5 || isFirstTime) {
+          this.data.push(new SuggestedUser(isExample));
+          add();
+        }
+      };
+      add();
+    }
+  }
+}
