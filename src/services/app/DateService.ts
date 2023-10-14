@@ -18,3 +18,18 @@ export const getIncreasedDateByDay = function (date: Date, days: number) {
   const day = 1000 * 60 * 60 * 24 * days;
   return new Date(date.getTime() + day);
 };
+
+export const getDateFromString = function (
+  year: string,
+  month: string,
+  day: string
+) {
+  return new Date(parseInt(year), parseInt(month), parseInt(day));
+};
+export const getTimestampFromString = function (
+  year: string,
+  month: string,
+  day: string
+) {
+  return new Date(parseInt(year), parseInt(month), parseInt(day)).getTime();
+};

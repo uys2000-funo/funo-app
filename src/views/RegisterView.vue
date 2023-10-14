@@ -1,173 +1,151 @@
 <template>
-  <div class="bg-primary row flex-center" style="height: 108px; width: 100%;">
-    <funo-text-icon color="white" style="height: 32px;" />
+  <div class="register-page">
+    <div class="register-page-header">
+      <funo-text-icon color="white" style="height: 32px;" />
+    </div>
+    <q-carousel v-model="slide" transition-prev="slide-right" transition-next="slide-left" animated
+      control-color="primary" class="register-page-contents">
+      <q-carousel-slide name="enterprise" class="register-page-contents-content register">
+        <div class="register-image"><register-inner-icon /></div>
+        <q-form class="register-form" @submit="() => formSubmit('enterprise')"
+          @validation-error="(comp) => formError(comp, 'enterprise')">
+          <q-carousel class="register-form-content" v-model="innerSlide" transition-prev="slide-right"
+            transition-next="slide-left" animated :keep-alive="true">
+            <q-carousel-slide class="register-form-content-slide" name="enterpriseGeneral" :keep-alive="true">
+              <div class="register-form-content-slide-text">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              </div>
+              <div class="register-form-content-slide-inputs">
+                <q-input outlined v-model="enterpriseUser.general.name" name="name" label="İşletme İsmi"
+                  :rules="[v => !!v || 'Gerekli Alan']" />
+                <q-input outlined v-model="enterpriseUser.general.taxNumber" name="taxNumber"
+                  label="İşletme vergi numarası" :rules="[v => !!v || 'Gerekli Alan']" />
+                <q-input outlined v-model="enterpriseUser.general.phone" name="phone" label="Telefon Numarası"
+                  mask="0 (###) ### ####" placeholder="0 (554) 000 0000"
+                  :rules="[v => (v && v.length == 16) || 'Gerekli Alan']" />
+                <q-input outlined v-model="enterpriseUser.general.address" name="address" label="İşletme adresi"
+                  :rules="[v => !!v || 'Gerekli Alan']" />
+              </div>
+            </q-carousel-slide>
+            <q-carousel-slide class="register-form-content-slide" name="enterpriseAccount" :keep-alive="true">
+              <div class="text-center fs18 lh27 fw400">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              </div>
+              <div class="register-form-content-slide-inputs">
+                <q-input outlined v-model="enterpriseUser.account.name" label="Kullanıcı Adı" mask="N" reverse-fill-mask
+                  :rules="[v => !!v || 'Gerekli Alan']" />
+                <q-input outlined v-model="password" label="Şifre" type="password"
+                  :rules="[v => v.length >= 6 || 'Gerekli Alan']" />
+                <q-input outlined v-model="passwordControl" label="Şifre Tekrar" type="password"
+                  :rules="[v => v == password || 'Gerekli Alan']" />
+                <q-input outlined v-model="enterpriseUser.account.mail" label="Mail Adresi" type="email"
+                  :rules="[v => (v && v.match(/[\w\d]*@[\w\d]+\.[\w\d]+/g)) || 'Gerekli Alan']" />
+                <q-item tag="label" v-ripple style="padding: 0px;">
+                  <q-item-section avatar>
+                    <q-checkbox v-model="right" />
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label>
+                      <a href="javascript;;" @click.prevent="openLicenseAgreement" class="ctitle">
+                        Kullanıcı sözleşmesi</a>'ni okudum ve onaylıyorum.</q-item-label>
+                  </q-item-section>
+                </q-item>
+              </div>
+            </q-carousel-slide>
+          </q-carousel>
+          <div class="register-form-submit">
+            <div class="register-form-submit-cover">
+              <q-btn class="register-form-submit-cover-button" no-caps square flat :type="btnType" :to="nextSlide">
+                Devam et
+              </q-btn>
+            </div>
+          </div>
+        </q-form>
+      </q-carousel-slide>
+      <q-carousel-slide name="landing" class="register-page-contents-content landing">
+        <div class="landing-content">
+          <register-icon class="landing-content-image" />
+          <div class="landing-content-text">Lütfen kullanıcı türünü seçiniz.</div>
+        </div>
+        <div class="landing-buttons">
+          <div class="landing-buttons-cover">
+            <q-btn no-caps square flat class="landing-buttons-cover-button" to="/register#individual">
+              Bireysel
+            </q-btn>
+          </div>
+          <div class="landing-buttons-cover">
+            <q-btn no-caps square flat class="landing-buttons-cover-button" to="/register#enterprise">
+              İşletme
+            </q-btn>
+          </div>
+        </div>
+      </q-carousel-slide>
+      <q-carousel-slide name="individual" class="register-page-contents-content register">
+        <div class="register-image"><register-inner-icon /></div>
+        <q-form class="register-form" @submit="() => formSubmit('individual')"
+          @validation-error="(comp) => formError(comp, 'individual')">
+          <q-carousel class="register-form-content" v-model="innerSlide" transition-prev="slide-right"
+            transition-next="slide-left" animated :keep-alive="true">
+            <q-carousel-slide class="register-form-content-slide" name="individualGeneral" :keep-alive="true">
+              <div class="register-form-content-slide-text">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              </div>
+              <div class="register-form-content-slide-inputs">
+                <q-input outlined v-model="individualUser.general.name" name="name" label="Ad" mask="S" reverse-fill-mask
+                  :rules="[v => !!v || 'Gerekli Alan']" />
+                <q-input outlined v-model="individualUser.general.surname" name="surname" label="Soyad" mask="S"
+                  reverse-fill-mask :rules="[v => !!v || 'Gerekli Alan']" />
+                <q-input outlined v-model="birthdate" label="Doğum Tarihi" name="birthdate" placeholder="GG-AA-YYYY"
+                  mask="##-##-####" :rules="[v => (v && v.length == 10) || 'Gerekli Alan']" />
+                <q-input outlined v-model="individualUser.general.phone" name="phone" label="Telefon Numarası"
+                  mask="0 (###) ### ####" placeholder="0 (554) 000 0000"
+                  :rules="[v => (v && v.length == 16) || 'Gerekli Alan']" />
+                <q-select outlined v-model="gender" name="gender"
+                  :options="[{ label: 'Erkek', value: true }, { label: 'Kadın', value: false },]" label="Cinsiyet"
+                  :rules="[v => !!v || 'Gerekli Alan']" />
+              </div>
+            </q-carousel-slide>
+            <q-carousel-slide class="register-form-content-slide" name="individualAccount" :keep-alive="true">
+              <div class="register-form-content-slide-text">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              </div>
+              <div class="register-form-content-slide-inputs">
+                <q-input outlined v-model="individualUser.account.name" label="Kullanıcı Adı" mask="N" reverse-fill-mask
+                  :rules="[v => !!v || 'Gerekli Alan']" />
+                <q-input outlined v-model="password" label="Şifre" type="password"
+                  :rules="[v => v.length >= 6 || 'Gerekli Alan']" />
+                <q-input outlined v-model="passwordControl" label="Şifre Tekrar" type="password"
+                  :rules="[v => v == password || 'Gerekli Alan']" />
+                <q-input outlined v-model="individualUser.account.mail" label="Mail Adresi" type="email"
+                  :rules="[v => (v && v.match(/[\w\d][\w\d]*@[\w\d][\w\d]+\.[\w\d][\w\d]+/g)) || 'Gerekli Alan']" />
+                <q-item tag="label" v-ripple style="padding: 0px;">
+                  <q-item-section avatar>
+                    <q-checkbox v-model="right" />
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label>
+                      <a href="javascript;;" @click.prevent="openLicenseAgreement" class="ctitle">
+                        Kullanıcı sözleşmesi</a>'ni okudum ve onaylıyorum.</q-item-label>
+                  </q-item-section>
+                </q-item>
+              </div>
+            </q-carousel-slide>
+          </q-carousel>
+          <div class="register-form-submit">
+            <div class="register-form-submit-cover">
+              <q-btn class="register-form-submit-cover-button" no-caps square flat :type="btnType" :to="nextSlide">
+                Devam et
+              </q-btn>
+            </div>
+          </div>
+        </q-form>
+      </q-carousel-slide>
+    </q-carousel>
+    <user-agreement :show="showAgreement" />
   </div>
-  <q-carousel v-model="slide" transition-prev="slide-right" transition-next="slide-left" animated control-color="primary"
-    class="fit" style="background-color: #00000000; flex-shrink: 1;">
-    <!-- #region Enterprise -->
-    <q-carousel-slide name="enterprise" class="column flex-center no-wrap" style="gap:16px; padding: 0px;">
-      <register-inner-icon style="flex-shrink: 1; height: 100%; width: 100%;" />
-      <q-form @submit="() => formSubmit('enterprise')" @validation-error="(comp) => formError(comp, 'enterprise')"
-        class="full-width column">
-        <q-carousel v-model="innerSlide" transition-prev="slide-right" transition-next="slide-left" animated
-          :keep-alive="true" control-color="primary" style="background-color: #00000000; height: unset;">
-          <!-- #region Enterprise General -->
-          <q-carousel-slide name="enterpriseGeneral" class="column flex-center no-wrap" :keep-alive="true">
-            <div class="text-center fs18 lh27 fw400">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            </div>
-            <div class="full-width column">
-              <q-input outlined v-model="enterpriseUser.general.name" name="name" label="İşletme İsmi"
-                :rules="[v => !!v || 'Gerekli Alan']" />
-              <q-input outlined v-model="enterpriseUser.general.taxNumber" name="taxNumber" label="İşletme vergi numarası"
-                :rules="[v => !!v || 'Gerekli Alan']" />
-              <q-input outlined v-model="enterpriseUser.general.phone" name="phone" label="Telefon Numarası"
-                mask="0 (###) ### ####" placeholder="0 (554) 000 0000"
-                :rules="[v => (v && v.length == 16) || 'Gerekli Alan']" />
-              <q-input outlined v-model="enterpriseUser.general.address" name="address" label="İşletme adresi"
-                :rules="[v => !!v || 'Gerekli Alan']" />
-            </div>
-          </q-carousel-slide>
-          <!-- #endregion -->
-          <!-- #region Enterprise Account -->
-          <q-carousel-slide name="enterpriseAccount" class="column flex-center no-wrap" :keep-alive="true">
-            <div class="text-center fs18 lh27 fw400">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            </div>
-            <div class="full-width column">
-              <q-input outlined v-model="enterpriseUser.account.name" label="Kullanıcı Adı" mask="N" reverse-fill-mask
-                :rules="[v => !!v || 'Gerekli Alan']" />
-              <q-input outlined v-model="password" label="Şifre" type="password"
-                :rules="[v => v.length >= 6 || 'Gerekli Alan']" />
-              <q-input outlined v-model="passwordControl" label="Şifre Tekrar" type="password"
-                :rules="[v => v == password || 'Gerekli Alan']" />
-              <q-input outlined v-model="enterpriseUser.account.mail" label="Mail Adresi" type="email"
-                :rules="[v => (v && v.match(/[\w\d]*@[\w\d]+\.[\w\d]+/g)) || 'Gerekli Alan']" />
-              <q-item tag="label" v-ripple style="padding: 0px;">
-                <q-item-section avatar>
-                  <q-checkbox v-model="right" />
-                </q-item-section>
-                <q-item-section>
-                  <q-item-label>
-                    <a href="javascript;;" @click.prevent="openLicenseAgreement" class="ctitle">
-                      Kullanıcı sözleşmesi</a>'ni okudum ve onaylıyorum.</q-item-label>
-                </q-item-section>
-              </q-item>
-            </div>
-          </q-carousel-slide>
-          <!-- #endregion -->
-        </q-carousel>
-        <div class="row flex-center full-width shadow-3" style="height: 100px;">
-          <div class="full-width" style="border-radius:4px; overflow: hidden; height: 52px;">
-            <q-btn no-caps square flat class="bg-primary fit" :type="btnType" :to="nextSlide">
-              <span class="text-white fs16 lh20 fw600">
-                Devam et
-              </span>
-            </q-btn>
-          </div>
-        </div>
-      </q-form>
-    </q-carousel-slide>
-    <!-- #endregion -->
-    <!-- #region Enterprise Compleate-->
-    <!-- #endregion -->
-    <!-- #region Choose -->
-    <q-carousel-slide name="landing" class="column flex-center no-wrap" style="gap:16px; padding-bottom: 100px;">
-      <register-icon style="margin-bottom: 8px; flex-shrink: 1;" />
-      <div class="fs20 lh30 fw600" style="margin-bottom: 16px;">
-        Lütfen kullanıcı türünü seçiniz.
-      </div>
-      <div class="full-width" style="border-radius:4px; overflow: hidden; height: 56px;">
-        <q-btn no-caps square flat class="bg-primary fit" to="/register#individual">
-          <span class="text-white fs16 lh20 fw600">
-            Bireysel
-          </span>
-        </q-btn>
-      </div>
-      <div class="full-width" style="border-radius:4px; overflow: hidden; height: 56px;">
-        <q-btn no-caps square flat class="bg-primary fit" to="/register#enterprise">
-          <span class="text-white fs16 lh20 fw600">
-            İşletme
-          </span>
-        </q-btn>
-      </div>
-    </q-carousel-slide>
-    <!-- #endregion -->
-    <!-- #region Individual Compleate-->
-    <!-- #endregion -->
-    <!-- #region Individual -->
-    <q-carousel-slide name="individual" class="column flex-center no-wrap" style="gap:16px; padding: 0px;">
-      <register-inner-icon style="flex-shrink: 1; height: 100%; width: 100%;" />
-      <q-form @submit="() => formSubmit('individual')" @validation-error="(comp) => formError(comp, 'individual')"
-        class="full-width column">
-        <q-carousel v-model="innerSlide" transition-prev="slide-right" transition-next="slide-left" animated
-          :keep-alive="true" control-color="primary" style="background-color: #00000000; height: unset;">
-          <!-- #region Individual General -->
-          <q-carousel-slide name="individualGeneral" class="column flex-center no-wrap" :keep-alive="true">
-            <div class="text-center fs18 lh27 fw400">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            </div>
-            <div class="full-width column">
-              <q-input outlined v-model="individualUser.general.name" name="name" label="Ad" mask="S" reverse-fill-mask
-                :rules="[v => !!v || 'Gerekli Alan']" />
-              <q-input outlined v-model="individualUser.general.surname" name="surname" label="Soyad" mask="S"
-                reverse-fill-mask :rules="[v => !!v || 'Gerekli Alan']" />
-              <q-input outlined v-model="birthdate" label="Doğum Tarihi" name="birthdate" placeholder="GG-AA-YYYY"
-                mask="##-##-####" :rules="[v => (v && v.length == 10) || 'Gerekli Alan']" />
-              <q-input outlined v-model="individualUser.general.phone" name="phone" label="Telefon Numarası"
-                mask="0 (###) ### ####" placeholder="0 (554) 000 0000"
-                :rules="[v => (v && v.length == 16) || 'Gerekli Alan']" />
-              <q-select outlined v-model="gender" name="gender"
-                :options="[{ label: 'Erkek', value: true }, { label: 'Kadın', value: false },]" label="Cinsiyet"
-                :rules="[v => !!v || 'Gerekli Alan']" />
-            </div>
-          </q-carousel-slide>
-          <!-- #endregion -->
-          <!-- #region Individual Account -->
-          <q-carousel-slide name="individualAccount" class="column flex-center no-wrap" :keep-alive="true">
-            <div class="text-center fs18 lh27 fw400">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            </div>
-            <div class="full-width column">
-              <q-input outlined v-model="individualUser.account.name" label="Kullanıcı Adı" mask="N" reverse-fill-mask
-                :rules="[v => !!v || 'Gerekli Alan']" />
-              <q-input outlined v-model="password" label="Şifre" type="password"
-                :rules="[v => v.length >= 6 || 'Gerekli Alan']" />
-              <q-input outlined v-model="passwordControl" label="Şifre Tekrar" type="password"
-                :rules="[v => v == password || 'Gerekli Alan']" />
-              <q-input outlined v-model="individualUser.account.mail" label="Mail Adresi" type="email"
-                :rules="[v => (v && v.match(/[\w\d][\w\d]*@[\w\d][\w\d]+\.[\w\d][\w\d]+/g)) || 'Gerekli Alan']" />
-              <q-item tag="label" v-ripple style="padding: 0px;">
-                <q-item-section avatar>
-                  <q-checkbox v-model="right" />
-                </q-item-section>
-                <q-item-section>
-                  <q-item-label>
-                    <a href="javascript;;" @click.prevent="openLicenseAgreement" class="ctitle">
-                      Kullanıcı sözleşmesi</a>'ni okudum ve onaylıyorum.</q-item-label>
-                </q-item-section>
-              </q-item>
-            </div>
-          </q-carousel-slide>
-          <!-- #endregion -->
-        </q-carousel>
-        <div class="row flex-center full-width shadow-3" style="height: 100px;">
-          <div class="full-width" style="border-radius:4px; overflow: hidden; height: 52px;">
-            <q-btn no-caps square flat class="bg-primary fit" :type="btnType" :to="nextSlide">
-              <span class="text-white fs16 lh20 fw600">
-                Devam et
-              </span>
-            </q-btn>
-          </div>
-        </div>
-      </q-form>
-    </q-carousel-slide>
-    <!-- #endregion -->
-  </q-carousel>
-  <user-agreement :show="showAgreement" />
 </template>
 <script lang="ts">
-import { IndividualUserData, EnterpriseUserData } from "@/types/user"
+import { IndividualUserData, EnterpriseUserData, IndividualUser, EnterpriseUser } from "@/types/user"
 import { Component, defineComponent } from 'vue'
 import UserAgreement from "@/components/dialogs/UserAgreement.vue"
 import FunoTextIcon from "@/icons/logo/FunoTextIcon.vue"
@@ -175,7 +153,8 @@ import RegisterIcon from "@/icons/viewSpesific/RegisterIcon.vue"
 import RegisterInnerIcon from "@/icons/viewSpesific/RegisterInnerIcon.vue"
 import { showAlert } from "@/services/capacitor/dialog"
 
-import { httpRequest, prepeareRequest } from "@/services/api"
+import { sendRegisterRequest } from "@/services/api/RegisterApi"
+import { getTimestampFromString } from "@/services/app/DateService"
 
 export default defineComponent({
   name: "RegisterView",
@@ -209,28 +188,33 @@ export default defineComponent({
         showAlert("Hata", text).then(() => this.$router.push(`/register#${type}Account`))
       }
     },
+    preapeareUser(type: "individual" | "enterprise") {
+      if (type == "individual") {
+        const birthdate = this.birthdate.split("-")
+        this.individualUser.general.birthdate = getTimestampFromString(birthdate[2], birthdate[1], birthdate[0])
+        this.individualUser.general.gender = this.gender?.value as boolean
+        this.individualUser.interests = { main: [], side: [] }
+        const user = new IndividualUser()
+        user.data = this.individualUser
+        return user
+      }
+      else {
+        this.enterpriseUser.interests = { main: [], side: [] }
+        const user = new EnterpriseUser()
+        user.data = this.enterpriseUser
+        return user
+      }
+    },
     async formSubmit(type: "individual" | "enterprise") {
       if (!this.right) return showAlert("Kullanıcı Sözleşmesi Onayı", "Kullanıcı sözleşmesini kabul etmeniz gerekmekte")
-
-      //Prepeare User Object
-      let user;
-      if (type == "individual") {
-        user = this.individualUser
-        const birthdate = this.birthdate.split("-")
-        user.general.birthdate = new Date(parseInt(birthdate[2]), parseInt(birthdate[1]), parseInt(birthdate[0])).getMilliseconds()
-        user.general.gender = this.gender?.value as boolean
-      } else user = this.enterpriseUser
-      user.interests = { main: [], side: [] }
+      const user = this.preapeareUser(type)
 
       //Create User
-      const body = { password: this.password, photoUrl: "null", user: prepeareRequest(user) }
-      const reuqest = await httpRequest("user/", "POST", body)
-      console.log(reuqest)
-      const result = await reuqest.json().catch(() => showAlert("Opps", "Some thing happend"))
-      console.log(result)
+      const result = await sendRegisterRequest.pLogger(user, this.password, "null")
+        .catch(() => showAlert("Opps", "Some thing happend"));
 
       //Show Results
-      if (result.success) this.$router.push("/register#success")
+      if (result.success) this.$router.push({ name: "LoginView" })
       else this.returnToErrorPages(result, type)
       return true
     },
@@ -264,3 +248,202 @@ export default defineComponent({
   },
 })
 </script>
+
+<style scoped>
+/* #region register-page */
+.register-page {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.register-page-header {
+  background-color: var(--color-primary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 108px;
+  width: 100%;
+}
+
+.register-page-contents {
+  width: 100%;
+  height: 100%;
+  background-color: #00000000;
+  flex-shrink: 1;
+  overflow: hidden;
+}
+
+.register-page-contents-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  padding: 0px;
+  flex-shrink: 1;
+  overflow: hidden;
+}
+
+/* #endregion */
+/* #region landing */
+.landing {
+  gap: 32px;
+  padding: 16px;
+  padding-bottom: 20vh;
+}
+
+.landing-content {
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 24px;
+}
+
+.landing-content-image {
+  flex-shrink: 1;
+}
+
+.landing-content-text {
+  color: var(--color-title);
+  text-align: center;
+  font-family: Source Sans Pro;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%;
+  /* 30px */
+  letter-spacing: 0.1px;
+}
+
+.landing-buttons {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 16px;
+}
+
+.landing-buttons-cover {
+  width: 100%;
+  border-radius: 4px;
+  overflow: hidden;
+  height: 56px;
+}
+
+.landing-buttons-cover-button {
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-primary);
+
+  color: var(--color-button-text);
+  text-align: center;
+  font-feature-settings: 'clig' off, 'liga' off;
+  font-family: Source Sans Pro;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+/* #endregion */
+/* #region register */
+.register {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  gap: 0px;
+  justify-content: flex-start;
+}
+
+.register-image {
+  height: 180px;
+  width: 180px;
+}
+
+.register-image svg {
+  flex-shrink: 1;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  flex-shrink: 1;
+  overflow: hidden;
+}
+
+.register-form-content {
+  background-color: transparent;
+  height: 100%;
+  flex-shrink: 1;
+}
+
+.register-form-content-slide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.register-form-content-slide-text {
+  color: var(--color-title);
+  text-align: center;
+  font-family: Source Sans Pro;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  letter-spacing: 0.09px;
+}
+
+.register-form-content-slide-inputs {
+  width: 100%;
+  overflow: auto;
+  height: 100%;
+  flex-shrink: 1;
+}
+
+.register-form-submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  box-shadow: 0px -4px 16px 0px rgba(0, 0, 0, 0.08);
+  height: 100px;
+}
+
+.register-form-submit-cover {
+  border-radius: 4px;
+  overflow: hidden;
+  height: 52px;
+  width: 100%;
+  height: 100%;
+  padding: 24px 16px;
+}
+
+.register-form-submit-cover-button {
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-primary);
+
+  color: var(--color-button-text);
+
+  text-align: center;
+  font-feature-settings: 'clig' off, 'liga' off;
+  font-family: Source Sans Pro;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+/* #endregion */
+</style>

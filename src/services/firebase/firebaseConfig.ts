@@ -1,8 +1,8 @@
 export default {
-  apiKey: "AIzaSyCsfB3qSrQZ6YfiB_wZ27Bb8Y-C_oF2nUc",
-  authDomain: "funo-66c58.firebaseapp.com",
-  projectId: "funo-66c58",
-  storageBucket: "funo-66c58.appspot.com",
-  messagingSenderId: "375741112301",
-  appId: "1:375741112301:web:9147b31fc1c89dd59b11e4",
+  apiKey: process.env.VUE_APP_FIREBASE_API_KEY,
+  authDomain: process.env.VUE_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.VUE_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.VUE_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.VUE_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.VUE_APP_FIREBASE_APP_ID,
 };

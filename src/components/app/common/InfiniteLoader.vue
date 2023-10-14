@@ -30,9 +30,7 @@ export default defineComponent({
     onLoad: {
       type: Function as PropType<(index: number, endLoader: (done?: boolean | undefined) => void) => void>,
       default: (index: number, done: (stop?: boolean | undefined) => void) => {
-        console.log("Loading Started", index)
         setTimeout(() => {
-          console.log("Loading Ended", index)
           done(false)
         }, 10000)
       }
@@ -77,11 +75,13 @@ export default defineComponent({
   },
   mounted() {
     setTimeout(() => {
+      // eslint-disable-next-line
       (this.addToOnScrollFunctions as any)(this.onLayoutScroll)
     })
   },
   beforeUnmount() {
     setTimeout(() => {
+      // eslint-disable-next-line
       (this.addToOnScrollFunctions as any)(this.onLayoutScroll)
     })
   }

@@ -1,5 +1,5 @@
 <template>
-  <div class="calendar-page" @scrollend="triggerInfiniteLoaders">
+  <div class="calendar-page">
     <sticky-flow>
       <q-tabs v-model="page" no-caps class="calendar-page-tabs" active-class="calendar-page-tabs-active"
         indicator-color="primary">
@@ -96,8 +96,6 @@ export default defineComponent({
         addExamplesToData(FunoEvent, this.funoEventsLiked.data, [true, true])
         done(index == 3)
       }, 2000);
-    }, triggerInfiniteLoaders(event: UIEvent) {
-      console.log("test")
     }
   },
   computed: {

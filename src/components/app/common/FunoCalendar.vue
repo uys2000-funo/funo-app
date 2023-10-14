@@ -45,11 +45,11 @@
 </template>
 
 <script lang="ts">
-import { FunoEvent, EventData } from '@/types/event';
+import { EventData } from '@/types/event';
 import { CalendarFunoEvents } from '@/types/event';
 import { PropType, defineComponent } from 'vue';
 
-import { checkDateIsToday, getIncreasedDateByDay, getMonthLength, getMonthLengthAsArray } from "@/services/app/FunoCalendarService"
+import { checkDateIsToday, getIncreasedDateByDay, getMonthLength, getMonthLengthAsArray } from "@/services/app/DateService"
 import { range } from "@/services/app/NumberService"
 export default defineComponent({
   props: {

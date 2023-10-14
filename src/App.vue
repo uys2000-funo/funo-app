@@ -9,7 +9,7 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
   mounted() {
-    console.log(process.env.VUE_APP_MODE)
+    console.log("VUE_APP_MODE", process.env.VUE_APP_MODE)
   }
 })
 </script>

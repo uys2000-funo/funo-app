@@ -9,6 +9,7 @@
  * @returns returns list paramater back.
  */
 export const addExamplesToData = function <
+  // eslint-disable-next-line
   T extends new (...args: any[]) => any
 >(
   target: T,
