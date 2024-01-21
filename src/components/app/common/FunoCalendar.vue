@@ -45,7 +45,7 @@
 </template>
 
 <script lang="ts">
-import { EventData } from '@/types/event';
+import { EventData, FunoEvent } from '@/types/event';
 import { CalendarFunoEvents } from '@/types/event';
 import { PropType, defineComponent } from 'vue';
 
@@ -91,10 +91,10 @@ export default defineComponent({
     }
   },
   computed: {
-    data() {
+    data(): FunoEvent[][] {
       return this.calendarFunoEvents.data
     },
-    days() {
+    days(): number[] {
       const cDay = ((this.date.getDay() + 6) % 7) + 1
       const wDay = (this.date.getDate() % 7)
       const sLength = (7 - (wDay - cDay)) % 7

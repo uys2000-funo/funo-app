@@ -15,7 +15,7 @@
     <div class="fs18 lh27 fw600">
       Lokasyon
     </div>
-    <q-input outlined v-model="sideTags" label="Konum seç" lazy-rules />
+    <q-input outlined v-model="sideTags" label="Konum seç" lazy-rules @click="showMap = true" />
     <q-input outlined v-model="eventData.general.description" label="Konum Tarifi" type="textarea" lazy-rules />
     <div class="fs18 lh27 fw600">
       Tarih & Zaman
@@ -124,15 +124,30 @@
     <div style="height: 182px; width:100%;">
       <image-box :model-value="images" />
     </div>
+
+    <dialog-with-slot v-model:show="showMap" fullscreen use-back-button>
+      <funo-map :location-choose="true" :set-location="() => showMap = false" />
+      <template #header>
+        <span class="ctitle fs15 fw600 lh19">
+          Konumu Seç
+        </span>
+      </template>
+    </dialog-with-slot>
   </q-form>
 </template>
 <script lang="ts">
 import { EventData } from '@/types/event';
 import { defineComponent } from 'vue';
+
+import { getLayoutQueries } from "@/services/app/router"
+
 import ImageBox from "@/components/common/ImageBox.vue"
+import DialogWithSlot from '@/components/dialogs/DialogWithSlot.vue';
+import FunoMap from '@/components/app/common/FunoMap.vue';
+
 export default defineComponent({
   name: "EventCreateView",
-  components: { ImageBox },
+  components: { ImageBox, DialogWithSlot, FunoMap },
   props: {
     directAccess: {
       type: Object
@@ -150,13 +165,14 @@ export default defineComponent({
         start: "",
         end: ""
       },
+      showMap: false,
       images: []
     }
   },
   methods: {
     callback() {
       console.log("this.eventData")
-    }
+    },
   },
   computed: {
     ageLimit: {
@@ -166,7 +182,7 @@ export default defineComponent({
       get(): boolean {
         return this.eventData.conditions.ageLimit && this.eventData.conditions.ageLimit[1] == 18 ? true : false
       }
-    }
-  }
+    },
+  },
 })
 </script>

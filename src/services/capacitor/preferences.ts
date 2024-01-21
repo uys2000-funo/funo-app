@@ -10,7 +10,7 @@ export const getPrefence = function (key: string) {
 };
 
 export const setPrefance = function (key: string, value: string) {
-  return Preferences.set({ key, value });
+  return Preferences.set({ key, value }).then(() => value);
 };
 
 export const removePrefence = function (key: string) {

@@ -47,7 +47,8 @@ export default defineComponent({
   emits: ['update:show'],
   props: {
     show: {
-      type: Boolean
+      type: Boolean,
+      default: false
     },
     fullscreen: {
       type: Boolean,
@@ -58,16 +59,16 @@ export default defineComponent({
   },
   data() {
     return {
-      multipleClickShield: false,
+      multipleClickShield: false as boolean,
     };
   },
   computed: {
     value: {
-      get() {
+      get(): boolean {
         return this.show;
       },
       set(value: boolean) {
-        if (this.multipleClickShield) return this.multipleClickShield = false;
+        if (this.multipleClickShield) { this.multipleClickShield = false; return; }
         if (this.value != false) this.$emit('update:show', value);
         this.multipleClickShield = true;
       }

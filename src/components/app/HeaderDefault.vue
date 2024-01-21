@@ -62,7 +62,8 @@ export default defineComponent({
   components: { FunoTextIcon, MessageIcon, AlertIcon, ArrowLeftIcon, UserAvatar },
   data() {
     return {
-      userData_: new IndividualUser() as FunoUser
+      userData_: new IndividualUser() as FunoUser,
+      location_: ""
     }
   },
   methods: {

@@ -88,7 +88,7 @@
                 {{ funoEvent.data.general.location.place }}
               </template>
               <template v-else>
-                {{ funoEvent.data.general.location.app }}
+                {{ funoEvent.data.general.location.description }}
               </template>
             </div>
           </div>
@@ -141,10 +141,10 @@ export default defineComponent({
         default: return "NotFound";
       }
     },
-    mainTagColor() {
+    mainTagColor(): string {
       return `background-color: var(--color-category-${this.funoEvent.data.general.tags.main})`;
     },
-    eventShortTime() {
+    eventShortTime(): string {
       const start = new Date(this.funoEvent.data.general.date.start);
       const end = new Date(this.funoEvent.data.general.date.end);
       return start.toLocaleDateString("tr", { day: "2-digit", month: "long", weekday: "long" }).replace(/ /g, ", ") + ", " +

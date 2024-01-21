@@ -9,5 +9,7 @@ export const getLayoutQueries = function (
   if (route.query.showViewTitle)
     query.showViewTitle = route.query.showViewTitle;
   if (route.query.viewTitle) query.viewTitle = route.query.viewTitle;
+  if (route.query.showMap) query.showMap = route.query.showMap;
+  if (route.query.eventCreate) query.eventCreate = route.query.eventCreate;
   return query;
 };

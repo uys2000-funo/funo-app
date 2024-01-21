@@ -92,7 +92,7 @@ export default defineComponent({
     },
     showEventCreate: {
       get(): boolean {
-        return this.$route.hash == "#event-create"
+        return this.$route.query.eventCreate == "show"
       },
       set() {
         this.$router.go(-1)

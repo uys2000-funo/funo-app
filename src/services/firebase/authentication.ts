@@ -4,6 +4,7 @@ import {
   signInWithCredential,
   GoogleAuthProvider,
   OAuthProvider,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 
 import { app } from "@/services/firebase";
@@ -29,4 +30,8 @@ export const signInWithAppleCredential = function (
   const provider = new OAuthProvider("apple.com");
   const credential = provider.credential({ idToken, rawNonce });
   return signInWithCredential(auth, credential);
+};
+
+export const sendPasswordResetEmailAuthentication = function (email: string) {
+  return sendPasswordResetEmail(auth, email);
 };

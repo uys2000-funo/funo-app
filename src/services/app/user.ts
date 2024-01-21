@@ -48,10 +48,10 @@ export const getLocalUserData = async function () {
  * @return {FunoUser} funoUser | undefined
  */
 export const getUserData = function (uID: string) {
-  return getDocument.pLogger("_Users", uID).then((documentSnapshot) => {
+  return getDocument.pLogger("-Users", uID).then((documentSnapshot) => {
     if (documentSnapshot.exists()) {
       const userData = documentSnapshot.data() as FunoUser;
-      setTimeout(() => setLocalUserData(uID, userData));
+      setTimeout(() => setLocalUserData.pLogger(uID, userData));
       return userData;
     } else return undefined;
   });

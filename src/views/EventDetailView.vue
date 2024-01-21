@@ -49,12 +49,7 @@
           </div>
           <div class="event-sub-header">
             <span class="cstitle fs13 fw400 lh16">
-              <template v-if="'place' in data.general.location">
-                {{ data.general.location.place }}
-              </template>
-              <template v-else>
-                {{ data.general.location.app }}
-              </template>
+              {{ data.general.location.location[0] }}
             </span>
           </div>
         </div>
@@ -114,7 +109,7 @@
     </div>
     <div class="event-location">
       <div class="column" style="gap:8px; padding: 0 16px;">
-        <template v-if="'place' in data.general.location">
+        <template v-if="'coordinates' in data.general.location">
           <div class="event-location-header">
             <div class="event-location-title">
               <span class="fw600 fs14 ctitle">
@@ -123,7 +118,7 @@
             </div>
             <div class="event-location-sub-title">
               <span class="fw400 fs12 cstitle">
-                {{ data.general.location.text }}
+                {{ data.general.location.location[0] }}
               </span>
             </div>
           </div>
@@ -139,8 +134,8 @@
               </span>
             </div>
             <div class="event-location-sub-title">
-              <a class="fw400 fs12 cstitle" :href="data.general.location.url" target="_blank">
-                {{ data.general.location.app }}
+              <a class="fw400 fs12 cstitle" :href="data.general.location.location[1]" target="_blank">
+                {{ data.general.location.location[0] }}
               </a>
             </div>
           </div>
@@ -151,7 +146,7 @@
 </template>
 
 <script lang="ts">
-import { FunoEvent } from '@/types/event';
+import { EventData, FunoEvent } from '@/types/event';
 import { defineComponent } from 'vue';
 
 import "ol/ol.css";
@@ -194,20 +189,20 @@ export default defineComponent({
         default: return "NotFound";
       }
     },
-    mainTagColor() {
+    mainTagColor(): string {
       return `background-color: var(--color-category-${this.data.general.tags.main})`;
     },
     funoEvent: {
       set(value: FunoEvent) {
         this.FunoEvent_ = value
       },
-      get() {
+      get(): FunoEvent {
         const hasTargetEvent = this.$route.params.eID as string | undefined
         this.setFunoEvent(hasTargetEvent)
         return this.FunoEvent_
       }
     },
-    data() {
+    data(): EventData {
       return this.funoEvent.data
     },
   },
@@ -220,14 +215,14 @@ export default defineComponent({
     },
   },
   mounted() {
-    if ("place" in this.data.general.location) {
+    if ("coordinates" in this.data.general.location) {
       this.map = new Map({ target: "map" })
-      const cordinates = [
-        this.data.general.location.coordinate.longitude,
-        this.data.general.location.coordinate.latitude,
+      const coordinates = [
+        this.data.general.location.coordinates.longitude,
+        this.data.general.location.coordinates.latitude,
       ]
       this.map.addLayer(new Tile({ source: new OSM() }))
-      this.map.setView(new View({ center: fromLonLat(cordinates), zoom: 15 }));
+      this.map.setView(new View({ center: fromLonLat(coordinates), zoom: 15 }));
     }
   }
 })

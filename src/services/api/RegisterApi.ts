@@ -1,5 +1,7 @@
 import { FunoUser } from "@/types/user";
-import { httpRequest } from ".";
+import { httpRequest, serverUrl } from ".";
+
+export const registerApiUrl = serverUrl + "user/";
 
 export const sendRegisterRequest = async function (
   user: FunoUser,
@@ -7,7 +9,7 @@ export const sendRegisterRequest = async function (
   photoUrl: string
 ) {
   const body = { password: password, photoUrl, user };
-  const reuqest = await httpRequest.pLogger("user/", "POST", body);
-  console.log(reuqest);
-  return await reuqest.json();
+  const request = await httpRequest.pLogger(registerApiUrl, "POST", body);
+  console.log(request);
+  return await request.json();
 };

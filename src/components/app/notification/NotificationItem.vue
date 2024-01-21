@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue"
-import { FunoNotification } from '@/types/notification';
+import { FunoNotification, NotificationData } from '@/types/notification';
 import UserAvatar from '@/components/app/common/UserAvatar.vue';
 
 export default defineComponent({
@@ -28,7 +28,7 @@ export default defineComponent({
     }
   },
   computed: {
-    data() {
+    data(): NotificationData {
       return this.funoFotification.data
     },
     time() {

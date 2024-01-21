@@ -6,10 +6,9 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-
 export default defineComponent({
   mounted() {
-    console.log("VUE_APP_MODE", process.env.VUE_APP_MODE)
+    console.warn("VUE_APP_MODE == ", process.env.VUE_APP_MODE)
   }
 })
 </script>

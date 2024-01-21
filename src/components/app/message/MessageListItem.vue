@@ -10,7 +10,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue"
-import { MessageSummary } from '@/types/messages';
+import { MessageSummary, MessageSummaryData } from '@/types/messages';
 
 import UserAvatar from "@/components/app/common/UserAvatar.vue";
 export default defineComponent({
@@ -22,6 +22,7 @@ export default defineComponent({
     },
     messageSummary: {
       type: Object as PropType<MessageSummary>,
+      default: new MessageSummary(),
       required: true
     }
   },
@@ -31,18 +32,18 @@ export default defineComponent({
     }
   },
   computed: {
-    photoUrl() {
+    photoUrl(): string {
       const data = this.messageSummary.data
       const index = data.participants.indexOf(this.uID)
       if (index == 0) return data.participantsPhotoUrls[1]
       return data.participantsPhotoUrls[0]
     },
-    chatName() {
+    chatName(): string {
       const data = this.messageSummary.data
       if (data.chatName != "") return data.chatName
       return ""
     },
-    lastMessage() {
+    lastMessage(): string {
       const data = this.messageSummary.data
       if (data.messages && data.messages.length != 0) return data.messages[0].data.message
       return ""

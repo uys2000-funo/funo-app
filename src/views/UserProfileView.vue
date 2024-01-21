@@ -117,6 +117,7 @@ export default defineComponent({
   components: { UserAvatar, SearchIcon, SideScroll },
   data() {
     return {
+      isLoaded: false,
       funoUser: new IndividualUser() as FunoUser,
       searchValue: "",
       tab: "events"
@@ -124,14 +125,17 @@ export default defineComponent({
   },
   methods: {
     getLocalUserData() {
+      this.isLoaded = true
       getLocalUserData.pLogger().then(userData => {
+        console.log(this.funoUser, userData)
         if (userData) this.funoUser = userData
       })
     }
   },
   computed: {
     data(): FunoUserData {
-      if (!this.funoUser.data?.account.mail) this.getLocalUserData()
+      console.log(this.funoUser.data)
+      if (!this.isLoaded) this.getLocalUserData()
       return this.funoUser.data
     },
   },

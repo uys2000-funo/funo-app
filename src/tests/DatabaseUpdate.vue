@@ -32,7 +32,7 @@
 import { defineComponent } from 'vue';
 
 import { EnterpriseUser, IndividualUser } from "@/types/user";
-import { getDocument, DocumentSnapshot, setDocument } from '@/services/firebase/firestore';
+import { setDocument } from '@/services/firebase/firestore';
 import { FunoEvent } from '@/types/event';
 export default defineComponent({
   data() {
@@ -43,15 +43,13 @@ export default defineComponent({
   },
   methods: {
     deleteDataNotFound(collection: string, document: string) {
-      this.deletedDatas.push([collection, document, "Data Not Found"])
+      this.deletedDatas.push([collection, document, "Data Deleted Unsuccesfully"])
     },
-    async deleteDataFound(collection: string, document: string, firebaseDoc: DocumentSnapshot) {
-      this.deletedDatas.push([collection, document, JSON.stringify(firebaseDoc.data(), null, 4)])
+    async deleteDataFound(collection: string, document: string) {
+      this.deletedDatas.push([collection, document, "Data Deleted Succesfully"])
     },
     async deleteData(collection: string, document: string) {
-      const firebaseDoc = await getDocument.pLogger(collection, document)
-      if (!firebaseDoc.exists()) return this.deleteDataNotFound(collection, document)
-      else return await this.deleteDataFound(collection, document, firebaseDoc)
+      return await this.deleteDataFound(collection, document)
     },
     async createData(collection: string, document: string, exampleData: object) {
       setDocument.pLogger(collection, document, exampleData).then(() => {

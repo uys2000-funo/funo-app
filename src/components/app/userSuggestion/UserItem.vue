@@ -17,7 +17,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue"
-import { SuggestedUser } from "@/types/user"
+import { SuggestedUser, SuggestedUserData } from "@/types/user"
 export default defineComponent({
   props: {
     suggestedUser: {
@@ -26,7 +26,7 @@ export default defineComponent({
     }
   },
   computed: {
-    data() {
+    data(): SuggestedUserData {
       return this.suggestedUser.data
     }
   }

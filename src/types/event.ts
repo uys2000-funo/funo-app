@@ -1,8 +1,9 @@
-import { OnlineAddress, PhysicalAddress } from "./address";
+import { Address, Application, Coordinates } from "./location";
 import { FirebaseDocument, FirebasePagination } from "./firebase";
 
 import { userPhotoUrls, eventPhotoUrls } from "./examples";
 import { addExamplesToData } from "@/services/app/ExampleService";
+import { geohashForLocation } from "geofire-common";
 export type EventMainTag =
   | "sport"
   | "education"
@@ -66,7 +67,7 @@ export class EventGeneralData {
   name!: string;
   description!: string;
   date!: EventGeneralDateData;
-  location!: PhysicalAddress | OnlineAddress;
+  location!: Address | Application;
   tags!: { main: EventMainTag; side: string[] };
   photoUrls!: string[];
 
@@ -74,7 +75,7 @@ export class EventGeneralData {
     this.name = "";
     this.description = "";
     this.date = { start: 0, end: 0 };
-    this.location = !isOnline ? new PhysicalAddress() : new OnlineAddress();
+    this.location = !isOnline ? new Address() : new Application();
     this.tags = new EventGeneralTagsData(isExample);
     this.photoUrls = [];
     if (isExample) {
@@ -82,8 +83,19 @@ export class EventGeneralData {
       this.description = "Example Description";
       this.date = { start: Date.now(), end: Date.now() + 100000 };
       this.location = !isOnline
-        ? new PhysicalAddress(true)
-        : new OnlineAddress(true);
+        ? new Address(
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            new Coordinates(
+              Math.random() * (44.5742 - 25.90902) + 25.90902,
+              Math.random() * (42.02683 - 35.9025) + 35.9025
+            )
+          )
+        : new Application();
       const addImage = () => {
         if (Math.random() < 0.8) {
           this.photoUrls.push(

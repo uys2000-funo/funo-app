@@ -5,9 +5,11 @@
     <q-page-container class="default-layout-page-container">
       <q-page>
         <router-view v-slot="{ Component }">
-          <transition name="fade" mode="out-in">
-            <component :is="Component" />
-          </transition>
+          <keep-alive>
+            <transition name="fade" mode="out-in">
+              <component :is="Component" />
+            </transition>
+          </keep-alive>
         </router-view>
       </q-page>
     </q-page-container>

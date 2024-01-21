@@ -10,33 +10,58 @@ import {
 
 export const db = getFirestore(app);
 
+/**
+ * Gets Data From Firestore.
+ * @constructor
+ * @param {string} collection
+ * @param {string} document
+ * @returns {DocumentSnapshot} DocumentSnapshot
+ */
 export const getDocument = function (collection: string, document: string) {
   const docRef = doc(db, collection, document);
   return getDoc(docRef);
 };
 
-// for database test update
-// eslint-disable-next-line
-const fd = function (data: object, result = {} as Record<string, any>) {
+/**
+ * Turns object into vanilla JS object. Removes any type declarations from the object. \nThis is needed by Firebase
+ * @constructor
+ * @param {object} data Any type of object
+ * @returns {object} object
+ */
+const fd = function (data: object, result = {} as object) {
   for (const key in data) {
     const target = data[key as keyof typeof data];
     if (typeof target === typeof {}) {
-      result[key] = Object.assign({}, target);
-      fd(data[key as keyof typeof data], result[key]);
+      result[key as keyof typeof result] = Object.assign({}, target);
+      fd(data[key as keyof typeof data], result[key as keyof typeof result]);
     }
   }
   return result;
 };
 
+/**
+ * Sets document in Firestore
+ * @constructor
+ * @param {string} collection
+ * @param {string} document
+ * @param {object} data
+ */
 export const setDocument = function (
   collection: string,
   document: string,
   data: object
 ) {
   const docRef = doc(db, collection, document);
-  // use this on data before use in tihs function Object.assign({}, data)
   return setDoc(docRef, fd(data));
 };
+
+/**
+ * Deletes document in Firestore
+ * @constructor
+ * @param {string} collection
+ * @param {string} document
+ * @param {object} data
+ */
 export const deleteDocument = function (collection: string, document: string) {
   const docRef = doc(db, collection, document);
   return deleteDoc(docRef);
