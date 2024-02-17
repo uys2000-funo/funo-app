@@ -3,7 +3,6 @@ import { FirebaseDocument, FirebasePagination } from "./firebase";
 
 import { userPhotoUrls, eventPhotoUrls } from "./examples";
 import { addExamplesToData } from "@/services/app/ExampleService";
-import { geohashForLocation } from "geofire-common";
 export type EventMainTag =
   | "sport"
   | "education"

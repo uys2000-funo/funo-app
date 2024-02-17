@@ -13,10 +13,24 @@
     <q-input outlined v-model="sideTags" label="Yan Kategoriler" lazy-rules
       placeholder="kategori1, kategori2, kategori3" />
     <div class="fs18 lh27 fw600">
-      Lokasyon
+      {{ eventData.general.location.location.length == 5 ? "Lokasyon" : "Uygulama" }}
+      <q-toggle v-model="value" />
     </div>
-    <q-input outlined v-model="sideTags" label="Konum seç" lazy-rules @click="showMap = true" />
-    <q-input outlined v-model="eventData.general.description" label="Konum Tarifi" type="textarea" lazy-rules />
+    <template v-if="eventData.general.location.location.length == 5">
+      <div style="position: relative;">
+        <q-input outlined :model-value="eventData.general.location.location.filter(i => i != '').join(', ')"
+          label="Konum seç" lazy-rules disable />
+        <div style="position: absolute; top: 0; left: 0; width:100%; height:100%" @click="showMap = true"></div>
+      </div>
+      <q-input outlined v-model="eventData.general.location.description" label="Konum Tarifi" type="textarea"
+        lazy-rules />
+    </template>
+    <template v-else>
+      <q-input outlined v-model="eventData.general.location.location[0]" label="App" lazy-rules />
+      <q-input outlined v-model="eventData.general.location.location[1]" label="Url" lazy-rules />
+      <q-input outlined lazy-rules v-model="eventData.general.location.description" label="Konum Tarifi"
+        type="textarea" />
+    </template>
     <div class="fs18 lh27 fw600">
       Tarih & Zaman
     </div>
@@ -43,11 +57,11 @@
         <span>
           Bitiş Tarihi
         </span>
-        <q-input outlined v-model="date.start" mask="##.##.####">
+        <q-input outlined v-model="date.end" mask="##.##.####">
           <template v-slot:append>
             <q-icon name=" event" class="cursor-pointer">
               <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                <q-date v-model="date.start" mask="DD.MM.YYYY">
+                <q-date v-model="date.end" mask="DD.MM.YYYY">
                   <div class="row items-center justify-end">
                     <q-btn v-close-popup label="Close" color="primary" flat />
                   </div>
@@ -117,7 +131,7 @@
     <div class="fs18 lh27 fw600">
       Fiyat
     </div>
-    <q-input outlined v-model.number="eventData.conditions.userLimit" label="Ödenecek Tutar" type="number" lazy-rules />
+    <q-input outlined v-model.number="eventData.conditions.price" label="Ödenecek Tutar" type="number" lazy-rules />
     <div class="fs18 lh27 fw600">
       Fotoğraf ekle
     </div>
@@ -126,7 +140,7 @@
     </div>
 
     <dialog-with-slot v-model:show="showMap" fullscreen use-back-button>
-      <funo-map :location-choose="true" :set-location="() => showMap = false" />
+      <funo-map :location-choose="true" :set-location="callback" />
       <template #header>
         <span class="ctitle fs15 fw600 lh19">
           Konumu Seç
@@ -138,13 +152,13 @@
 <script lang="ts">
 import { EventData } from '@/types/event';
 import { defineComponent } from 'vue';
-
-import { getLayoutQueries } from "@/services/app/router"
+import { Coordinates, Address } from "@/types/location";
+import { getLastPositions, getCurrentPosition, getUsableAddress } from '@/services/app/GeolocationService';
 
 import ImageBox from "@/components/common/ImageBox.vue"
 import DialogWithSlot from '@/components/dialogs/DialogWithSlot.vue';
 import FunoMap from '@/components/app/common/FunoMap.vue';
-
+import { getAdressFromCoordinates } from '@/services/app/GeolocationService';
 export default defineComponent({
   name: "EventCreateView",
   components: { ImageBox, DialogWithSlot, FunoMap },
@@ -170,8 +184,13 @@ export default defineComponent({
     }
   },
   methods: {
-    callback() {
-      console.log("this.eventData")
+    callback(coordinate: [number, number]) {
+      getAdressFromCoordinates(new Coordinates(coordinate[0], coordinate[1])).then(res => {
+        const locations = getUsableAddress(res)
+        locations.description = this.eventData.general.location.description
+        this.eventData.general.location = locations
+        this.showMap = false
+      })
     },
   },
   computed: {

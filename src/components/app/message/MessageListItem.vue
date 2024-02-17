@@ -10,7 +10,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue"
-import { MessageSummary, MessageSummaryData } from '@/types/messages';
+import { MessageSummary, } from '@/types/messages';
 
 import UserAvatar from "@/components/app/common/UserAvatar.vue";
 export default defineComponent({

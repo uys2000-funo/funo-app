@@ -19,7 +19,8 @@
           </div>
         </div>
         <div class="home-page-sticky-top-cover">
-          <q-btn class="home-page-sticky-cover-button" no-caps square flat dense :to="{ query: { 'eventCreate': 'show' } }">
+          <q-btn class="home-page-sticky-cover-button" no-caps square flat dense
+            :to="{ query: { 'eventCreate': 'show' } }">
             Etkinlik Oluştur
           </q-btn>
         </div>
@@ -33,7 +34,8 @@
             </template>
           </q-input>
         </div>
-        <q-btn class="home-page-sticky-bot-filter" round flast outline>
+        <q-btn class="home-page-sticky-bot-filter" round flast outline
+          :to="{ query: { filter: 'true', showLogo: 'true', showHiToUser: 'true' } }">
           <q-icon name="tune" size="20px" style="color:var(--color-text)" />
         </q-btn>
       </div>
@@ -54,50 +56,37 @@
           </template>
         </side-scroll>
       </div>
+      <div class="home-page-contents-content">
+        <div class="home-page-contents-content-header">
+          <span class="home-page-contents-content-header-text">
+            Çevrendekiler
+          </span>
+          <router-link class="home-page-contents-content-header-link" :to="{ name: 'DiscoverView' }">
+            Tümünü Göster
+          </router-link>
+        </div>
+        <side-scroll class="home-page-contents-content-slider">
+          <template v-for="event, i in [...events].reverse()" :key="i">
+            <event-summary small :funo-event="event" />
+          </template>
+        </side-scroll>
+      </div>
+      <div class="home-page-contents-content">
+        <div class="home-page-contents-content-header">
+          <span class="home-page-contents-content-header-text">
+            Sana Özel
+          </span>
+          <router-link class="home-page-contents-content-header-link" :to="{ name: 'DiscoverView' }">
+            Tümünü Göster
+          </router-link>
+        </div>
+        <side-scroll class="home-page-contents-content-slider">
+          <template v-for="event, i in [...events].reverse()" :key="i">
+            <event-summary small :funo-event="event" />
+          </template>
+        </side-scroll>
+      </div>
     </div>
-    <div class="row justify-between" style="margin: 0 16px; margin-top: 24px; margin-bottom: 16px;">
-      <span class="text-black sw600 fs14 lh17">
-        POPULAR ETKİNLİKLER
-      </span>
-
-      <router-link class="cb sw600 fs14 lh17" :to="{ name: 'DiscoverView' }" style="text-decoration: none;">
-        Tümünü Göster
-      </router-link>
-    </div>
-    <side-scroll style="height: 279px; width: 100%; overflow-y: visible;">
-      <template v-for="event, i in [...events].reverse()" :key="i">
-        <event-summary small :funo-event="event" />
-      </template>
-    </side-scroll>
-    <div class="row justify-between" style="margin: 0 16px; margin-top: 24px; margin-bottom: 16px;">
-      <span class="text-black sw600 fs14 lh17">
-        ÇEVRENDEKİLER
-      </span>
-
-      <router-link class="cb sw600 fs14 lh17" :to="{ name: 'DiscoverView' }" style="text-decoration: none;">
-        Tümünü Göster
-      </router-link>
-    </div>
-    <side-scroll style="height: 279px; width: 100%;">
-      <template v-for="event, i in events" :key="i">
-        <event-summary small :funo-event="event" />
-      </template>
-    </side-scroll>
-    <div class="row justify-between" style="margin: 0 16px; margin-top: 24px; margin-bottom: 16px;">
-      <span class="text-black sw600 fs14 lh17">
-        SANa ÖZEL
-      </span>
-
-      <router-link class="cb sw600 fs14 lh17" :to="{ name: 'DiscoverView' }" style="text-decoration: none;">
-        Tümünü Göster
-      </router-link>
-    </div>
-    <side-scroll style="height: 279px; width: 100%;">
-      <template v-for="event, i in events" :key="i">
-        <event-summary small :funo-event="event" />
-      </template>
-    </side-scroll>
-
   </div>
 </template>
 
@@ -164,7 +153,7 @@ export default defineComponent({
 
 <style scoped>
 .home-page {
-  padding-top: 60px;
+  padding-top: 130px;
   display: flex;
   flex-direction: column;
 }
@@ -270,13 +259,13 @@ export default defineComponent({
 .home-page-contents {
   display: flex;
   flex-direction: column;
-  gap: 24px;
 }
 
 .home-page-contents-content {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  padding: 12px 0;
 }
 
 .home-page-contents-content-header {

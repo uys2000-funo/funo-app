@@ -70,6 +70,8 @@
       </span>
     </template>
   </dialog-with-slot>
+
+  <filter-dialog v-model:show="showFilter" />
 </template>
 
 <script lang="ts">
@@ -79,8 +81,9 @@ import DialogWithSlot from '@/components/dialogs/DialogWithSlot.vue';
 import EventDetailView from '@/views/EventDetailView.vue';
 import EventCreateView from '@/views/EventCreateView.vue';
 import MessageView from '@/views/MessageView.vue';
+import FilterDialog from './common/FilterDialog.vue';
 export default defineComponent({
-  components: { DialogWithSlot, EventDetailView, EventCreateView, MessageView },
+  components: { DialogWithSlot, EventDetailView, EventCreateView, MessageView, FilterDialog },
   computed: {
     showEventDetail: {
       get() {
@@ -101,6 +104,14 @@ export default defineComponent({
     showMessage: {
       get(): boolean {
         return this.$route.query.chat != "" && this.$route.query.chat != undefined
+      },
+      set() {
+        this.$router.go(-1)
+      }
+    },
+    showFilter: {
+      get(): boolean {
+        return this.$route.query.filter != "" && this.$route.query.filter != undefined
       },
       set() {
         this.$router.go(-1)
